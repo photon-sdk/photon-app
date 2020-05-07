@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@photon-sdk/photon-lib": "^0.1.3",
-    "@photon-sdk/react-native-tcp": "^6.2.0",
+    "@photon-sdk/react-native-tcp": "^6.3.0",
     "@react-native-community/async-storage": "^1.10.0",
     "node-libs-react-native": "^1.2.0",
     "react": "16.11.0",
