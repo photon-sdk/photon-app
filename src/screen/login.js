@@ -9,14 +9,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const BackupScreen = ({navigation}) => (
+const LoginScreen = ({navigation}) => (
   <View style={styles.body}>
-    <Text style={{fontSize: 30}}>This is the backup screen!</Text>
+    <Text style={{fontSize: 30}}>This is the Login screen!</Text>
     <Button
-      onPress={() => navigation.navigate('Wallet')}
+      onPress={() => navigation.navigate('Main')}
       title="Open Modal"
     />
   </View>
 );
 
-export default BackupScreen;
+export default LoginScreen;

@@ -9,14 +9,14 @@ const styles = StyleSheet.create({
   },
 });
 
-const BackupScreen = ({navigation}) => (
+const VerifyScreen = ({navigation}) => (
   <View style={styles.body}>
     <Text style={{fontSize: 30}}>This is the verify screen!</Text>
     <Button
-      onPress={() => navigation.navigate('Backup')}
+      onPress={() => navigation.navigate('Main')}
       title="Open Modal"
     />
   </View>
 );
 
-export default BackupScreen;
+export default VerifyScreen;

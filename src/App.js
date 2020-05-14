@@ -3,13 +3,14 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import WalletScreen from './screen/wallet';
-import BackupScreen from './screen/backup';
+import LoginScreen from './screen/login';
+import VerifyScreen from './screen/verify';
 import {initLocalStore, initElectrumClient} from './action/wallet';
 
 let hasWallet;
 
 (async function init() {
-  hasWallet = await initLocalStore();
+  // hasWallet = await initLocalStore();
   // initElectrumClient();
 })();
 
@@ -25,7 +26,8 @@ const MainStackScreen = () => (
 
 const BackupStackScreen = () => (
   <BackupStack.Navigator>
-    <BackupStack.Screen name="Backup" component={BackupScreen} />
+    <BackupStack.Screen name="Login" component={LoginScreen} />
+    <BackupStack.Screen name="Verify" component={VerifyScreen} />
   </BackupStack.Navigator>
 );
 

@@ -13,7 +13,7 @@ const WalletScreen = ({navigation}) => (
   <View style={styles.body}>
     <Text style={{fontSize: 30}}>This is the wallet screen!</Text>
     <Button
-      onPress={() => navigation.navigate('Backup')}
+      onPress={() => navigation.navigate('Login')}
       title="Open Modal"
     />
   </View>
