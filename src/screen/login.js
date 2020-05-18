@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Button, View, Text} from 'react-native';
 import {TextInput} from '../component/input';
 
-import {store, setPhone, checkForBackup} from '../action/wallet';
+import {setPhone, checkForBackup} from '../action/wallet';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -35,7 +35,6 @@ const LoginScreen = ({navigation}) => {
         keyboardType="phone-pad"
         style={styles.input}
         autoFocus
-        value={store.phone}
         onChangeText={phone => setPhone(phone)}
       />
       <View style={styles.btnWrapper}>
