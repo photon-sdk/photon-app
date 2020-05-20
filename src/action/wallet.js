@@ -5,19 +5,24 @@ import {
   KeyBackup,
 } from '@photon-sdk/photon-lib';
 
+import store from '../store';
+import * as nav from './nav';
+
 const keyServerURI =
   'https://uctj65wt6j.execute-api.eu-central-1.amazonaws.com/dev';
 
-export const store = new WalletStore();
+const walletStore = new WalletStore();
 
 //
 // Init and startup
 //
 
-export async function initLocalStore() {
+export async function loadFromDisk() {
   try {
-    await store.loadFromDisk();
-    return !!store.getWallets().length;
+    await walletStore.loadFromDisk();
+    const [wallet] = walletStore.getWallets();
+    store.wallet = wallet;
+    return !!wallet;
   } catch (err) {
     console.error(err);
   }
@@ -32,52 +37,62 @@ export async function initElectrumClient() {
 }
 
 //
-// Login with phone number
+// Login screen
 //
 
 export function setPhone(phone) {
   store.phone = phone;
 }
 
+export async function checkPhone() {
+  try {
+    await _checkForBackup();
+    nav.navigate('Verify');
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function _checkForBackup() {
+  const {phone} = store;
+  KeyBackup.init({keyServerURI});
+  walletStore.backupExists = await KeyBackup.checkForExistingBackup({phone});
+  if (!walletStore.backupExists) {
+    console.log('Photon: No backup found. Register new user ...');
+    await KeyBackup.registerNewUser({phone});
+  } else {
+    console.log('Photon: Backup found. Register new device ...');
+    await KeyBackup.registerDevice({phone});
+  }
+}
+
+//
+// Verify screen
+//
+
 export function setCode(code) {
   store.code = code;
 }
 
-export async function checkForBackup() {
+export async function checkCode() {
   try {
-    const {phone} = store;
-    KeyBackup.init({keyServerURI});
-    store.backupExists = await KeyBackup.checkForExistingBackup({phone});
-    if (!store.backupExists) {
-      console.log('Photon: No backup found. Register new user ...');
-      await KeyBackup.registerNewUser({phone});
-    } else {
-      console.log('Photon: Backup found. Register new device ...');
-      await KeyBackup.registerDevice({phone});
-    }
+    await _verifyCode();
+    nav.navigate('Main');
   } catch (err) {
     console.error(err);
   }
 }
 
-export async function verifyCode() {
-  try {
-    const {phone, code} = store;
-    if (!store.backupExists) {
-      await _verifyAndCreateNewUser(phone, code);
-      console.log('Photon: New user registered and backup created!');
-    } else {
-      await _verifyDeviceAndRestore(phone, code);
-      console.log('Photon: New device registered and backup restored!');
-    }
-  } catch (err) {
-    console.error(err);
+async function _verifyCode() {
+  const {phone, code} = store;
+  if (!walletStore.backupExists) {
+    await _verifyAndCreateNewUser(phone, code);
+    console.log('Photon: New user registered and backup created!');
+  } else {
+    await _verifyDeviceAndRestore(phone, code);
+    console.log('Photon: New device registered and backup restored!');
   }
 }
-
-//
-// Register new user and key backup
-//
 
 async function _verifyAndCreateNewUser(phone, code) {
   // verify and fetch encryption key
@@ -89,13 +104,9 @@ async function _verifyAndCreateNewUser(phone, code) {
   // cloud backup of encrypted seed
   await KeyBackup.createBackup({mnemonic});
   // store wallet on device
-  store.wallets.push(wallet);
-  // await store.saveToDisk();
+  walletStore.wallets.push(wallet);
+  await walletStore.saveToDisk();
 }
-
-//
-// Register device for existing user and restore backup
-//
 
 async function _verifyDeviceAndRestore(phone, code) {
   // verify and fetch encryption key
@@ -109,8 +120,8 @@ async function _verifyDeviceAndRestore(phone, code) {
     throw Error('Cannot validate mnemonic');
   }
   // store wallet on device
-  store.wallets.push(wallet);
-  // await store.saveToDisk();
+  walletStore.wallets.push(wallet);
+  await walletStore.saveToDisk();
 }
 
 //
@@ -120,23 +131,22 @@ async function _verifyDeviceAndRestore(phone, code) {
 export async function fetchBalanceAndTx() {
   try {
     await ElectrumClient.waitTillConnected();
-    await store.fetchWalletBalances();
-    await store.fetchWalletTransactions();
+    await walletStore.fetchWalletBalances();
+    await walletStore.fetchWalletTransactions();
   } catch (err) {
     console.error(err);
   }
 }
 
 export function getXpub() {
-  const [wallet] = store.getWallets();
-  return wallet ? wallet.getXpub() : '';
+  store.xpub = store.wallet.getXpub();
 }
 
 export function getBalance() {
-  store.getBalance();
+  store.balance = walletStore.getBalance();
 }
 
 export async function getNextAddress() {
-  const [wallet] = store.getWallets();
+  const [wallet] = walletStore.getWallets();
   return wallet.getAddressAsync();
 }

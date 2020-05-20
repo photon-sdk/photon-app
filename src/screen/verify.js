@@ -1,8 +1,11 @@
 import React from 'react';
 import {StyleSheet, Button, View, Text} from 'react-native';
+import {observer} from 'mobx-react';
+
 import {TextInput} from '../component/input';
 
-import {store, setCode, verifyCode} from '../action/wallet';
+import store from '../store';
+import * as wallet from '../action/wallet';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -26,29 +29,24 @@ const styles = StyleSheet.create({
   },
 });
 
-const VerifyScreen = ({navigation}) => {
-  const {phone} = store;
-  return (
-    <View style={styles.wrapper}>
-      <Text style={styles.h1}>Enter the code sent to {phone}</Text>
-      <TextInput
-        keyboardType="number-pad"
-        style={styles.input}
-        autoFocus
-        onChangeText={code => setCode(code)}
+const VerifyScreen = () => (
+  <View style={styles.wrapper}>
+    <Text style={styles.h1}>Enter the code sent to {store.phone}</Text>
+    <TextInput
+      keyboardType="number-pad"
+      style={styles.input}
+      autoFocus
+      value={store.code}
+      onChangeText={code => wallet.setCode(code)}
+    />
+    <View style={styles.btnWrapper}>
+      <Button
+        title="Next"
+        style={styles.btnNext}
+        onPress={() => wallet.checkCode()}
       />
-      <View style={styles.btnWrapper}>
-        <Button
-          title="Next"
-          style={styles.btnNext}
-          onPress={async () => {
-            await verifyCode();
-            navigation.navigate('Main');
-          }}
-        />
-      </View>
     </View>
-  );
-};
+  </View>
+);
 
-export default VerifyScreen;
+export default observer(VerifyScreen);

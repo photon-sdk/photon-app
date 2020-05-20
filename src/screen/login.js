@@ -1,8 +1,11 @@
 import React from 'react';
 import {StyleSheet, Button, View, Text} from 'react-native';
+import {observer} from 'mobx-react';
+
 import {TextInput} from '../component/input';
 
-import {setPhone, checkForBackup} from '../action/wallet';
+import store from '../store';
+import * as wallet from '../action/wallet';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -26,29 +29,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginScreen = ({navigation}) => {
-  return (
-    <View style={styles.wrapper}>
-      <Text style={styles.h1}>Enter your phone number</Text>
-      <TextInput
-        placeholder="phone"
-        keyboardType="phone-pad"
-        style={styles.input}
-        autoFocus
-        onChangeText={phone => setPhone(phone)}
+const LoginScreen = () => (
+  <View style={styles.wrapper}>
+    <Text style={styles.h1}>Enter your phone number</Text>
+    <TextInput
+      placeholder="phone"
+      keyboardType="phone-pad"
+      style={styles.input}
+      autoFocus
+      value={store.phone}
+      onChangeText={phone => wallet.setPhone(phone)}
+    />
+    <View style={styles.btnWrapper}>
+      <Button
+        title="Next"
+        style={styles.btnNext}
+        onPress={() => wallet.checkPhone()}
       />
-      <View style={styles.btnWrapper}>
-        <Button
-          title="Next"
-          style={styles.btnNext}
-          onPress={async () => {
-            await checkForBackup();
-            navigation.navigate('Verify');
-          }}
-        />
-      </View>
     </View>
-  );
-};
+  </View>
+);
 
-export default LoginScreen;
+export default observer(LoginScreen);

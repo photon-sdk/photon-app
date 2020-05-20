@@ -1,7 +1,8 @@
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
+import {observer} from 'mobx-react';
 
-import {store, getXpub} from '../action/wallet';
+import store from '../store';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -19,16 +20,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const WalletScreen = ({navigation}) => {
-  const {backupExists} = store;
-  return (
-    <View style={styles.wrapper}>
-      <Text style={styles.h1}>
-        Wallet {backupExists ? 'Restored' : 'Backed Up'}!
-      </Text>
-      <Text style={styles.xpub}>Public key: {getXpub()}</Text>
-    </View>
-  );
-};
+const WalletScreen = () => (
+  <View style={styles.wrapper}>
+    <Text style={styles.h1}>
+      Wallet {store.backupExists !== false ? 'Restored' : 'Backed Up'}!
+    </Text>
+    <Text style={styles.xpub}>Public key: {store.xpub}</Text>
+  </View>
+);
 
-export default WalletScreen;
+export default observer(WalletScreen);
