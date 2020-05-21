@@ -4,6 +4,8 @@ import store from '../store';
 import * as nav from './nav';
 import * as wallet from './wallet';
 
+wallet.initElectrumClient();
+
 when(
   () => store.navReady,
   async () => {
@@ -18,17 +20,16 @@ when(
 
 when(
   () => store.wallet,
-  async () => {
+  () => {
     wallet.getXpub();
-    wallet.initElectrumClient();
   },
 );
 
 when(
-  () => store.electrumConnected,
+  () => store.wallet && store.electrumConnected,
   async () => {
-    await wallet.fetchBalanceAndTx();
-    wallet.getBalance();
+    await wallet.fetchBalance();
+    await wallet.fetchTransactions();
     await wallet.getNextAddress();
   },
 );

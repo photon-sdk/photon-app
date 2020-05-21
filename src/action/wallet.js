@@ -39,9 +39,17 @@ export async function initElectrumClient() {
 // Wallet usage apis
 //
 
-export async function fetchBalanceAndTx() {
+export async function fetchBalance() {
   try {
     await walletStore.fetchWalletBalances();
+    store.balance = walletStore.getBalance();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function fetchTransactions() {
+  try {
     await walletStore.fetchWalletTransactions();
   } catch (err) {
     console.error(err);
@@ -50,10 +58,6 @@ export async function fetchBalanceAndTx() {
 
 export function getXpub() {
   store.xpub = store.wallet.getXpub();
-}
-
-export function getBalance() {
-  store.balance = walletStore.getBalance();
 }
 
 export async function getNextAddress() {
