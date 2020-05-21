@@ -33,6 +33,7 @@ const VerifyScreen = () => (
   <View style={styles.wrapper}>
     <Text style={styles.h1}>Enter the code sent to {store.phone}</Text>
     <TextInput
+      placeholder="code"
       keyboardType="number-pad"
       style={styles.input}
       autoFocus
