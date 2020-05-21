@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {TextInput} from '../component/input';
 
 import store from '../store';
-import * as wallet from '../action/wallet';
+import * as backup from '../action/backup';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -38,13 +38,13 @@ const LoginScreen = () => (
       style={styles.input}
       autoFocus
       value={store.phone}
-      onChangeText={phone => wallet.setPhone(phone)}
+      onChangeText={phone => backup.setPhone(phone)}
     />
     <View style={styles.btnWrapper}>
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => wallet.checkPhone()}
+        onPress={() => backup.checkPhone()}
       />
     </View>
   </View>

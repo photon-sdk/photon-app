@@ -8,7 +8,7 @@ let _back;
 export function setTopLevelNavigator(navigatorRef) {
   _navigate = name => navigatorRef.dispatch(CommonActions.navigate({name}));
 
-  _back = () => navigatorRef.dispatch(CommonActions.back());
+  _back = () => navigatorRef.dispatch(CommonActions.goBack());
 
   _reset = name =>
     navigatorRef.dispatch(
@@ -21,11 +21,11 @@ export function setTopLevelNavigator(navigatorRef) {
   store.navReady = true;
 }
 
-export function back() {
+export function goBack() {
   _back();
 }
 
-export function navigate(routeName) {
+export function goTo(routeName) {
   _navigate(routeName);
 }
 
