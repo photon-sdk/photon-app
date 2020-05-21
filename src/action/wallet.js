@@ -31,6 +31,8 @@ export async function loadFromDisk() {
 export async function initElectrumClient() {
   try {
     await ElectrumClient.connectMain();
+    await ElectrumClient.waitTillConnected();
+    store.electrumConnected = true;
   } catch (err) {
     console.error(err);
   }
@@ -46,9 +48,10 @@ export function setPhone(phone) {
 
 export async function checkPhone() {
   try {
-    await _checkForBackup();
     nav.navigate('Verify');
+    await _checkForBackup();
   } catch (err) {
+    nav.navigate('Login');
     console.error(err);
   }
 }
@@ -56,8 +59,8 @@ export async function checkPhone() {
 async function _checkForBackup() {
   const {phone} = store;
   KeyBackup.init({keyServerURI});
-  walletStore.backupExists = await KeyBackup.checkForExistingBackup({phone});
-  if (!walletStore.backupExists) {
+  store.backupExists = await KeyBackup.checkForExistingBackup({phone});
+  if (!store.backupExists) {
     console.log('Photon: No backup found. Register new user ...');
     await KeyBackup.registerNewUser({phone});
   } else {
@@ -76,16 +79,17 @@ export function setCode(code) {
 
 export async function checkCode() {
   try {
-    await _verifyCode();
     nav.navigate('Main');
+    await _verifyCode();
   } catch (err) {
+    nav.navigate('Verify');
     console.error(err);
   }
 }
 
 async function _verifyCode() {
-  const {phone, code} = store;
-  if (!walletStore.backupExists) {
+  const {phone, code, backupExists} = store;
+  if (!backupExists) {
     await _verifyAndCreateNewUser(phone, code);
     console.log('Photon: New user registered and backup created!');
   } else {
@@ -103,9 +107,7 @@ async function _verifyAndCreateNewUser(phone, code) {
   const mnemonic = await wallet.getSecret();
   // cloud backup of encrypted seed
   await KeyBackup.createBackup({mnemonic});
-  // store wallet on device
-  walletStore.wallets.push(wallet);
-  await walletStore.saveToDisk();
+  await _storeToDisk(wallet);
 }
 
 async function _verifyDeviceAndRestore(phone, code) {
@@ -119,9 +121,13 @@ async function _verifyDeviceAndRestore(phone, code) {
   if (!wallet.validateMnemonic()) {
     throw Error('Cannot validate mnemonic');
   }
-  // store wallet on device
+  await _storeToDisk(wallet);
+}
+
+async function _storeToDisk(wallet) {
   walletStore.wallets.push(wallet);
   await walletStore.saveToDisk();
+  store.wallet = wallet;
 }
 
 //
@@ -130,7 +136,6 @@ async function _verifyDeviceAndRestore(phone, code) {
 
 export async function fetchBalanceAndTx() {
   try {
-    await ElectrumClient.waitTillConnected();
     await walletStore.fetchWalletBalances();
     await walletStore.fetchWalletTransactions();
   } catch (err) {
@@ -147,6 +152,5 @@ export function getBalance() {
 }
 
 export async function getNextAddress() {
-  const [wallet] = walletStore.getWallets();
-  return wallet.getAddressAsync();
+  store.nextAddress = await store.wallet.getAddressAsync();
 }

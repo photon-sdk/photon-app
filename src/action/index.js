@@ -20,7 +20,15 @@ when(
   () => store.wallet,
   async () => {
     wallet.getXpub();
-    wallet.getBalance();
     // wallet.initElectrumClient();
+  },
+);
+
+when(
+  () => store.electrumConnected,
+  async () => {
+    await wallet.fetchBalanceAndTx();
+    wallet.getBalance();
+    await wallet.getNextAddress();
   },
 );

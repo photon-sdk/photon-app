@@ -6,6 +6,8 @@ export default observable({
   phone: null,
   code: null,
   wallet: null,
+  electrumConnected: false,
   xpub: null,
   balance: null,
+  nextAddress: null,
 });
