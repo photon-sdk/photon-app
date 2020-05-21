@@ -4,8 +4,6 @@ import store from '../store';
 import * as nav from './nav';
 import * as wallet from './wallet';
 
-wallet.initElectrumClient();
-
 when(
   () => store.navReady,
   async () => {
@@ -20,8 +18,11 @@ when(
 
 when(
   () => store.wallet,
-  () => {
-    wallet.getXpub();
+  async () => {
+    wallet.loadXpub();
+    wallet.loadBalance();
+    wallet.loadTransactions();
+    await wallet.initElectrumClient();
   },
 );
 
@@ -30,6 +31,7 @@ when(
   async () => {
     await wallet.fetchBalance();
     await wallet.fetchTransactions();
-    await wallet.getNextAddress();
+    await wallet.fetchNextAddress();
+    await wallet.saveCache();
   },
 );

@@ -9,5 +9,6 @@ export default observable({
   electrumConnected: false,
   xpub: null,
   balance: null,
+  transactions: [],
   nextAddress: null,
 });
