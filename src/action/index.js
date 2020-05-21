@@ -20,7 +20,7 @@ when(
   () => store.wallet,
   async () => {
     wallet.getXpub();
-    // wallet.initElectrumClient();
+    wallet.initElectrumClient();
   },
 );
 
