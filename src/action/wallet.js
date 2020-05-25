@@ -1,3 +1,4 @@
+import {DevSettings} from 'react-native';
 import {WalletStore, ElectrumClient} from '@photon-sdk/photon-lib';
 
 import store from '../store';
@@ -79,4 +80,29 @@ export async function fetchNextAddress() {
 
 export async function saveCache() {
   await walletStore.saveToDisk();
+}
+
+//
+// Logout and cleanup
+//
+
+export async function logout() {
+  try {
+    await _stopElectrumClient();
+    await _wipeCache();
+    DevSettings.reload();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+async function _stopElectrumClient() {
+  await ElectrumClient.forceDisconnect();
+  store.electrumConnected = false;
+}
+
+async function _wipeCache() {
+  const newStore = new WalletStore();
+  await newStore.saveToDisk();
+  store.walletReady = false;
 }
