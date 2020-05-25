@@ -48,10 +48,10 @@ export function setCode(code) {
 
 export async function checkCode() {
   try {
-    nav.goTo('Main');
+    nav.reset('Main');
     await _verifyCode();
   } catch (err) {
-    nav.goBack();
+    nav.reset('Backup');
     console.error(err);
   }
 }

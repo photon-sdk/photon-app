@@ -62,7 +62,7 @@ const App = () => (
       <RootStack.Screen
         name="Main"
         component={MainStackScreen}
-        options={{headerShown: false}}
+        options={{title: 'Wallet'}}
       />
     </RootStack.Navigator>
   </NavigationContainer>
