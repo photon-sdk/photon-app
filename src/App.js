@@ -1,6 +1,7 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
 import './action';
 import {setTopLevelNavigator} from './action/nav';
@@ -11,7 +12,7 @@ import VerifyScreen from './screen/verify';
 import WalletScreen from './screen/wallet';
 
 const BackupStack = createStackNavigator();
-const MainStack = createStackNavigator();
+const MainStack = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
 const BackupStackScreen = () => (
