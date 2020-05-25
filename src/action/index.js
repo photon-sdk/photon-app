@@ -17,7 +17,7 @@ when(
 );
 
 when(
-  () => store.wallet,
+  () => store.walletReady,
   async () => {
     wallet.loadXpub();
     wallet.loadBalance();
@@ -27,7 +27,7 @@ when(
 );
 
 when(
-  () => store.wallet && store.electrumConnected,
+  () => store.walletReady && store.electrumConnected,
   async () => {
     await wallet.fetchBalance();
     await wallet.fetchTransactions();

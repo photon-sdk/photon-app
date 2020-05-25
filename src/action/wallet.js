@@ -11,18 +11,22 @@ const walletStore = new WalletStore();
 export async function saveToDisk(wallet) {
   walletStore.wallets.push(wallet);
   await walletStore.saveToDisk();
-  store.wallet = wallet;
+  store.walletReady = true;
 }
 
 export async function loadFromDisk() {
   try {
     await walletStore.loadFromDisk();
-    const [wallet] = walletStore.getWallets();
-    store.wallet = wallet;
-    return !!wallet;
+    store.walletReady = !!_getWallet();
+    return store.walletReady;
   } catch (err) {
     console.error(err);
   }
+}
+
+function _getWallet() {
+  const [wallet] = walletStore.getWallets();
+  return wallet;
 }
 
 export async function initElectrumClient() {
@@ -40,7 +44,7 @@ export async function initElectrumClient() {
 //
 
 export function loadXpub() {
-  store.xpub = store.wallet.getXpub();
+  store.xpub = _getWallet().getXpub();
 }
 
 export function loadBalance() {
@@ -70,7 +74,7 @@ export async function fetchTransactions() {
 }
 
 export async function fetchNextAddress() {
-  store.nextAddress = await store.wallet.getAddressAsync();
+  store.nextAddress = await _getWallet().getAddressAsync();
 }
 
 export async function saveCache() {

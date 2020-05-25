@@ -5,7 +5,7 @@ export default observable({
   backupExists: null,
   phone: null,
   code: null,
-  wallet: null,
+  walletReady: false,
   electrumConnected: false,
   xpub: null,
   balance: null,
