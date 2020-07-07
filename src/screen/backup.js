@@ -29,25 +29,36 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginScreen = () => (
+const BackupScreen = () => (
   <View style={styles.wrapper}>
-    <Text style={styles.h1}>Enter your phone number</Text>
+    <Text style={styles.h1}>Please set a new PIN</Text>
     <TextInput
-      placeholder="phone"
-      keyboardType="phone-pad"
-      style={styles.input}
+      placeholder="Set PIN"
+      keyboardType="number-pad"
+      textContentType="newPassword"
+      secureTextEntry
       autoFocus
-      value={store.phone}
-      onChangeText={phone => backup.setPhone(phone)}
+      style={styles.input}
+      value={store.pin}
+      onChangeText={pin => backup.setPin(pin)}
+    />
+    <TextInput
+      placeholder="Verify PIN"
+      keyboardType="number-pad"
+      textContentType="newPassword"
+      secureTextEntry
+      style={styles.input}
+      value={store.pinCheck}
+      onChangeText={pin => backup.setPinCheck(pin)}
     />
     <View style={styles.btnWrapper}>
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => backup.checkPhone()}
+        onPress={() => backup.checkNewPin()}
       />
     </View>
   </View>
 );
 
-export default observer(LoginScreen);
+export default observer(BackupScreen);

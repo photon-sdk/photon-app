@@ -3,6 +3,7 @@ import {when} from 'mobx';
 import store from '../store';
 import * as nav from './nav';
 import * as wallet from './wallet';
+import * as backup from './backup';
 
 when(
   () => store.navReady,
@@ -10,8 +11,13 @@ when(
     const hasWallet = await wallet.loadFromDisk();
     if (hasWallet) {
       nav.reset('Main');
-    } else {
+      return;
+    }
+    const hasBackup = await backup.checkBackup();
+    if (!hasBackup) {
       nav.reset('Backup');
+    } else {
+      nav.reset('Restore');
     }
   },
 );

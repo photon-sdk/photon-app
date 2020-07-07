@@ -8,21 +8,13 @@ import './action';
 import {setTopLevelNavigator} from './action/nav';
 
 import SplashScreen from './screen/splash';
-import LoginScreen from './screen/login';
-import VerifyScreen from './screen/verify';
+import BackupScreen from './screen/backup';
+import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
 import SettingsScreen from './screen/settings';
 
-const BackupStack = createStackNavigator();
 const MainStack = createBottomTabNavigator();
 const RootStack = createStackNavigator();
-
-const BackupStackScreen = () => (
-  <BackupStack.Navigator>
-    <BackupStack.Screen name="Login" component={LoginScreen} />
-    <BackupStack.Screen name="Verify" component={VerifyScreen} />
-  </BackupStack.Navigator>
-);
 
 const MainStackScreen = () => (
   <MainStack.Navigator
@@ -58,8 +50,13 @@ const App = () => (
       />
       <RootStack.Screen
         name="Backup"
-        component={BackupStackScreen}
-        options={{headerShown: false}}
+        component={BackupScreen}
+        options={{title: 'Create Wallet'}}
+      />
+      <RootStack.Screen
+        name="Restore"
+        component={RestoreScreen}
+        options={{title: 'Restore Wallet'}}
       />
       <RootStack.Screen
         name="Main"

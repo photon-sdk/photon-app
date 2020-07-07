@@ -4,86 +4,77 @@ import store from '../store';
 import * as nav from './nav';
 import {saveToDisk} from './wallet';
 
-const keyServerURI =
-  'https://uctj65wt6j.execute-api.eu-central-1.amazonaws.com/dev';
-
-//
-// Login screen
-//
-
-export function setPhone(phone) {
-  store.phone = phone;
+export async function checkBackup() {
+  KeyBackup.init({keyServerURI: store.settings.keyServer});
+  store.backupExists = await KeyBackup.checkForExistingBackup();
+  return store.backupExists;
 }
 
-export async function checkPhone() {
+export function setPin(pin) {
+  store.pin = pin;
+}
+
+export function setPinCheck(pin) {
+  store.pinCheck = pin;
+}
+
+//
+// Backup screen
+//
+
+export async function checkNewPin() {
   try {
-    nav.goTo('Verify');
-    await _checkForBackup();
-  } catch (err) {
-    nav.goBack();
-    console.error(err);
-  }
-}
-
-async function _checkForBackup() {
-  const {phone} = store;
-  KeyBackup.init({keyServerURI});
-  store.backupExists = await KeyBackup.checkForExistingBackup({phone});
-  if (!store.backupExists) {
-    console.log('Photon: No backup found. Register new user ...');
-    await KeyBackup.registerNewUser({phone});
-  } else {
-    console.log('Photon: Backup found. Register new device ...');
-    await KeyBackup.registerDevice({phone});
-  }
-}
-
-//
-// Verify screen
-//
-
-export function setCode(code) {
-  store.code = code;
-}
-
-export async function checkCode() {
-  try {
+    const pin = _validateNewPin();
     nav.reset('Main');
-    await _verifyCode();
+    await _generateWalletAndBackup(pin);
+    console.log('Photon: New key generated and backup created!');
   } catch (err) {
     nav.reset('Backup');
     console.error(err);
   }
 }
 
-async function _verifyCode() {
-  const {phone, code, backupExists} = store;
-  if (!backupExists) {
-    await _verifyAndCreateNewUser(phone, code);
-    console.log('Photon: New user registered and backup created!');
-  } else {
-    await _verifyDeviceAndRestore(phone, code);
-    console.log('Photon: New device registered and backup restored!');
+function _validateNewPin() {
+  const {pin, pinCheck} = store;
+  if (!pin || pin.length < 6) {
+    throw new Error('PIN must be at least 6 digits!');
   }
+  if (pin !== pinCheck) {
+    throw new Error("PINs don't match!");
+  }
+  return pin;
 }
 
-async function _verifyAndCreateNewUser(phone, code) {
-  // verify and fetch encryption key
-  await KeyBackup.verifyNewUser({phone, code});
+async function _generateWalletAndBackup(pin) {
   // generate new wallet
   const wallet = new HDSegwitBech32Wallet();
   await wallet.generate();
   const mnemonic = await wallet.getSecret();
   // cloud backup of encrypted seed
-  await KeyBackup.createBackup({mnemonic});
+  const data = {mnemonic};
+  await KeyBackup.createBackup({data, pin});
   await saveToDisk(wallet);
 }
 
-async function _verifyDeviceAndRestore(phone, code) {
-  // verify and fetch encryption key
-  await KeyBackup.verifyDevice({phone, code});
-  // fetch and decrypt user's seed
-  const {mnemonic} = await KeyBackup.restoreBackup();
+//
+// Restore screen
+//
+
+export async function checkPin() {
+  try {
+    nav.reset('Main');
+    await _verifyPinAndRestore();
+    console.log('Photon: PIN verified and backup restored!');
+  } catch (err) {
+    nav.reset('Restore');
+    console.error(err);
+  }
+}
+
+async function _verifyPinAndRestore() {
+  const {pin} = store;
+  // fetch encryption key and decrypt cloud backup
+  const {mnemonic} = await KeyBackup.restoreBackup({pin});
   // restore wallet from seed
   const wallet = new HDSegwitBech32Wallet();
   wallet.setSecret(mnemonic);
