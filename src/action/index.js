@@ -15,9 +15,9 @@ when(
     }
     const hasBackup = await backup.checkBackup();
     if (!hasBackup) {
-      nav.reset('Backup');
+      backup.initBackup();
     } else {
-      nav.reset('Restore');
+      backup.initRestore();
     }
   },
 );

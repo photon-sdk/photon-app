@@ -29,13 +29,13 @@ const styles = StyleSheet.create({
   },
 });
 
-const RestoreScreen = () => (
+const BackupScreen = () => (
   <View style={styles.wrapper}>
-    <Text style={styles.h1}>Enter your PIN</Text>
+    <Text style={styles.h1}>Set a new PIN</Text>
     <TextInput
       placeholder="PIN"
       keyboardType="number-pad"
-      textContentType="password"
+      textContentType="newPassword"
       secureTextEntry
       autoFocus
       style={styles.input}
@@ -46,10 +46,10 @@ const RestoreScreen = () => (
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => backup.validatePin()}
+        onPress={() => backup.validateNewPin()}
       />
     </View>
   </View>
 );
 
-export default observer(RestoreScreen);
+export default observer(BackupScreen);

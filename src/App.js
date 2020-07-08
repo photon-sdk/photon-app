@@ -8,13 +8,30 @@ import './action';
 import {setTopLevelNavigator} from './action/nav';
 
 import SplashScreen from './screen/splash';
-import BackupScreen from './screen/backup';
+import PinSetScreen from './screen/pin-set';
+import PinCheckScreen from './screen/pin-check';
 import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
 import SettingsScreen from './screen/settings';
 
+const BackupStack = createStackNavigator();
 const MainStack = createBottomTabNavigator();
 const RootStack = createStackNavigator();
+
+const BackupStackScreen = () => (
+  <BackupStack.Navigator>
+    <BackupStack.Screen
+      name="PinSet"
+      component={PinSetScreen}
+      options={{title: 'Set PIN'}}
+    />
+    <BackupStack.Screen
+      name="PinCheck"
+      component={PinCheckScreen}
+      options={{title: 'Verify PIN'}}
+    />
+  </BackupStack.Navigator>
+);
 
 const MainStackScreen = () => (
   <MainStack.Navigator
@@ -50,8 +67,8 @@ const App = () => (
       />
       <RootStack.Screen
         name="Backup"
-        component={BackupScreen}
-        options={{title: 'Create Wallet'}}
+        component={BackupStackScreen}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="Restore"

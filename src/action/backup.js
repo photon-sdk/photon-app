@@ -4,41 +4,69 @@ import store from '../store';
 import * as nav from './nav';
 import {saveToDisk} from './wallet';
 
+//
+// Init
+//
+
 export async function checkBackup() {
   KeyBackup.init({keyServerURI: store.settings.keyServer});
   store.backupExists = await KeyBackup.checkForExistingBackup();
   return store.backupExists;
 }
 
+//
+// Pin Set screen
+//
+
+export function initBackup() {
+  store.backup.pin = '';
+  store.backup.pinCheck = '';
+  nav.reset('Backup');
+}
+
 export function setPin(pin) {
-  store.pin = pin;
+  store.backup.pin = pin;
 }
 
-export function setPinCheck(pin) {
-  store.pinCheck = pin;
-}
-
-//
-// Backup screen
-//
-
-export async function checkNewPin() {
+export async function validateNewPin() {
   try {
-    const pin = _validateNewPin();
-    nav.reset('Main');
-    await _generateWalletAndBackup(pin);
-    console.log('Photon: New key generated and backup created!');
+    _validateNewPin();
+    nav.goTo('PinCheck');
   } catch (err) {
-    nav.reset('Backup');
+    initBackup();
     console.error(err);
   }
 }
 
 function _validateNewPin() {
-  const {pin, pinCheck} = store;
+  const {pin} = store.backup;
   if (!pin || pin.length < 6) {
     throw new Error('PIN must be at least 6 digits!');
   }
+  return pin;
+}
+
+//
+// Pin Check screen
+//
+
+export function setPinCheck(pin) {
+  store.backup.pinCheck = pin;
+}
+
+export async function validatePinCheck() {
+  try {
+    const pin = _validatePinCheck();
+    nav.reset('Main');
+    await _generateWalletAndBackup(pin);
+  } catch (err) {
+    initBackup();
+    console.error(err);
+  }
+}
+
+function _validatePinCheck() {
+  const {pin, pinCheck} = store.backup;
   if (pin !== pinCheck) {
     throw new Error("PINs don't match!");
   }
@@ -60,19 +88,24 @@ async function _generateWalletAndBackup(pin) {
 // Restore screen
 //
 
-export async function checkPin() {
+export function initRestore() {
+  store.backup.pin = '';
+  nav.reset('Restore');
+}
+
+export async function validatePin() {
   try {
     nav.reset('Main');
     await _verifyPinAndRestore();
     console.log('Photon: PIN verified and backup restored!');
   } catch (err) {
-    nav.reset('Restore');
+    initRestore();
     console.error(err);
   }
 }
 
 async function _verifyPinAndRestore() {
-  const {pin} = store;
+  const {pin} = store.backup;
   // fetch encryption key and decrypt cloud backup
   const {mnemonic} = await KeyBackup.restoreBackup({pin});
   // restore wallet from seed

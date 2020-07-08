@@ -31,31 +31,22 @@ const styles = StyleSheet.create({
 
 const BackupScreen = () => (
   <View style={styles.wrapper}>
-    <Text style={styles.h1}>Please set a new PIN</Text>
+    <Text style={styles.h1}>Verify your PIN</Text>
     <TextInput
-      placeholder="Set PIN"
+      placeholder="PIN"
       keyboardType="number-pad"
-      textContentType="newPassword"
+      textContentType="password"
       secureTextEntry
       autoFocus
       style={styles.input}
-      value={store.pin}
-      onChangeText={pin => backup.setPin(pin)}
-    />
-    <TextInput
-      placeholder="Verify PIN"
-      keyboardType="number-pad"
-      textContentType="newPassword"
-      secureTextEntry
-      style={styles.input}
-      value={store.pinCheck}
+      value={store.backup.pinCheck}
       onChangeText={pin => backup.setPinCheck(pin)}
     />
     <View style={styles.btnWrapper}>
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => backup.checkNewPin()}
+        onPress={() => backup.validatePinCheck()}
       />
     </View>
   </View>
