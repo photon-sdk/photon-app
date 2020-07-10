@@ -16,6 +16,11 @@ export default observable({
     pin: '',
     pinCheck: '',
   },
+  userId: {
+    email: '',
+    code: '',
+    pin: '',
+  },
 
   // Persistent data
   settings: {

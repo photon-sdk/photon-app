@@ -4,6 +4,7 @@ import store from '../store';
 import * as nav from './nav';
 import * as wallet from './wallet';
 import * as backup from './backup';
+import * as userId from './user-id';
 
 when(
   () => store.navReady,
@@ -28,6 +29,7 @@ when(
     wallet.loadXpub();
     wallet.loadBalance();
     wallet.loadTransactions();
+    await userId.init();
     await wallet.initElectrumClient();
   },
 );
