@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const BackupScreen = () => (
+const PinCheckScreen = () => (
   <View style={styles.wrapper}>
     <Text style={styles.h1}>Verify your PIN</Text>
     <TextInput
@@ -52,4 +52,4 @@ const BackupScreen = () => (
   </View>
 );
 
-export default observer(BackupScreen);
+export default observer(PinCheckScreen);
