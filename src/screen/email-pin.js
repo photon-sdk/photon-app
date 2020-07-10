@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
 
 const EmailPinScreen = () => (
   <View style={styles.wrapper}>
-    <Text style={styles.h1}>Set a new PIN</Text>
+    <Text style={styles.h1}>Enter your PIN</Text>
     <TextInput
       placeholder="PIN"
       keyboardType="number-pad"
