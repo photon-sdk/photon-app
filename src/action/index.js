@@ -9,6 +9,7 @@ import * as userId from './user-id';
 when(
   () => store.navReady,
   async () => {
+    backup.init();
     const hasWallet = await wallet.loadFromDisk();
     if (hasWallet) {
       nav.reset('Main');

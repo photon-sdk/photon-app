@@ -8,8 +8,11 @@ import {saveToDisk} from './wallet';
 // Init
 //
 
-export async function checkBackup() {
+export function init() {
   KeyBackup.init({keyServerURI: store.settings.keyServer});
+}
+
+export async function checkBackup() {
   store.backupExists = await KeyBackup.checkForExistingBackup();
   return store.backupExists;
 }
