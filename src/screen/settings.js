@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
 const SettingsScreen = () => (
   <View style={styles.wrapper}>
     <View style={styles.btnWrapper}>
-      <Button title="Logout" onPress={() => wallet.logout()} />
-    </View>
-    <View style={styles.btnWrapper}>
       <Text>{store.settings.email}</Text>
       <Button
         title="Set Recovery Email"
         onPress={() => userId.initEmailSet()}
       />
+    </View>
+    <View style={styles.btnWrapper}>
+      <Button title="Logout" onPress={() => wallet.logout()} />
     </View>
   </View>
 );
