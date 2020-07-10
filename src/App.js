@@ -9,7 +9,7 @@ import * as nav from './action/nav';
 
 import SplashScreen from './screen/splash';
 import PinSetScreen from './screen/pin-set';
-import PinCheckScreen from './screen/pin-check';
+import PinVerifyScreen from './screen/pin-verify';
 import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
 import SettingsScreen from './screen/settings';
@@ -31,8 +31,8 @@ const BackupStackScreen = () => (
       options={{title: 'Set PIN'}}
     />
     <BackupStack.Screen
-      name="PinCheck"
-      component={PinCheckScreen}
+      name="PinVerify"
+      component={PinVerifyScreen}
       options={{title: 'Verify PIN'}}
     />
   </BackupStack.Navigator>

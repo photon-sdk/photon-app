@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PinCheckScreen = () => (
+const PinVerifyScreen = () => (
   <View style={styles.wrapper}>
     <Text style={styles.h1}>Verify your PIN</Text>
     <TextInput
@@ -39,17 +39,17 @@ const PinCheckScreen = () => (
       secureTextEntry
       autoFocus
       style={styles.input}
-      value={store.backup.pinCheck}
-      onChangeText={pin => backup.setPinCheck(pin)}
+      value={store.backup.pinVerify}
+      onChangeText={pin => backup.setPinVerify(pin)}
     />
     <View style={styles.btnWrapper}>
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => backup.validatePinCheck()}
+        onPress={() => backup.validatePinVerify()}
       />
     </View>
   </View>
 );
 
-export default observer(PinCheckScreen);
+export default observer(PinVerifyScreen);

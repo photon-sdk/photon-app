@@ -23,7 +23,7 @@ export async function checkBackup() {
 
 export function initBackup() {
   store.backup.pin = '';
-  store.backup.pinCheck = '';
+  store.backup.pinVerify = '';
   nav.reset('Backup');
 }
 
@@ -34,7 +34,7 @@ export function setPin(pin) {
 export async function validateNewPin() {
   try {
     _validateNewPin();
-    nav.goTo('PinCheck');
+    nav.goTo('PinVerify');
   } catch (err) {
     initBackup();
     console.error(err);
@@ -53,13 +53,13 @@ function _validateNewPin() {
 // Pin Check screen
 //
 
-export function setPinCheck(pin) {
-  store.backup.pinCheck = pin;
+export function setPinVerify(pin) {
+  store.backup.pinVerify = pin;
 }
 
-export async function validatePinCheck() {
+export async function validatePinVerify() {
   try {
-    const pin = _validatePinCheck();
+    const pin = _validatePinVerify();
     nav.reset('Main');
     await _generateWalletAndBackup(pin);
   } catch (err) {
@@ -68,9 +68,9 @@ export async function validatePinCheck() {
   }
 }
 
-function _validatePinCheck() {
-  const {pin, pinCheck} = store.backup;
-  if (pin !== pinCheck) {
+function _validatePinVerify() {
+  const {pin, pinVerify} = store.backup;
+  if (pin !== pinVerify) {
     throw new Error("PINs don't match!");
   }
   return pin;
