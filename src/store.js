@@ -21,9 +21,12 @@ export default observable({
     code: '',
     pin: '',
   },
+  settings: {
+    email: null,
+  },
 
   // Persistent data
-  settings: {
+  config: {
     electrum: {
       host: 'blockstream.info',
       tcp: null,

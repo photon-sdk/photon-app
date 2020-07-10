@@ -9,7 +9,7 @@ import {saveToDisk} from './wallet';
 //
 
 export function init() {
-  KeyBackup.init({keyServerURI: store.settings.keyServer});
+  KeyBackup.init({keyServerURI: store.config.keyServer});
 }
 
 export async function checkBackup() {

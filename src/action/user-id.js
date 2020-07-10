@@ -8,7 +8,7 @@ import * as nav from './nav';
 //
 
 export async function init() {
-  store.userId.email = await KeyBackup.getEmail();
+  store.settings.email = await KeyBackup.getEmail();
 }
 
 //
@@ -69,6 +69,7 @@ export async function validateEmailCode() {
   try {
     nav.goTo('EmailWait');
     await _verifyEmail();
+    await init();
     nav.goTo('Settings');
   } catch (err) {
     nav.goTo('EmailVerify');
