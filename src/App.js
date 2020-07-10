@@ -86,8 +86,8 @@ const MainStackScreen = () => (
       },
     })}>
     <MainStack.Screen name="Wallet" component={WalletScreen} />
-    <MainStack.Screen name="Send" component={WalletScreen} />
     <MainStack.Screen name="Receive" component={WalletScreen} />
+    <MainStack.Screen name="Send" component={WalletScreen} />
     <MainStack.Screen name="Settings" component={SettingsScreen} />
   </MainStack.Navigator>
 );
