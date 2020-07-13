@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {TextInput} from '../component/input';
 
 import store from '../store';
-import * as backup from '../action/backup';
+import * as userId from '../action/user-id';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -29,25 +29,27 @@ const styles = StyleSheet.create({
   },
 });
 
-const LoginScreen = () => (
+const EmailPinScreen = () => (
   <View style={styles.wrapper}>
-    <Text style={styles.h1}>Enter your phone number</Text>
+    <Text style={styles.h1}>Enter your PIN</Text>
     <TextInput
-      placeholder="phone"
-      keyboardType="phone-pad"
-      style={styles.input}
+      placeholder="PIN"
+      keyboardType="number-pad"
+      textContentType="password"
+      secureTextEntry
       autoFocus
-      value={store.phone}
-      onChangeText={phone => backup.setPhone(phone)}
+      style={styles.input}
+      value={store.userId.pin}
+      onChangeText={pin => userId.setPin(pin)}
     />
     <View style={styles.btnWrapper}>
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => backup.checkPhone()}
+        onPress={() => userId.validateEmailPin()}
       />
     </View>
   </View>
 );
 
-export default observer(LoginScreen);
+export default observer(EmailPinScreen);

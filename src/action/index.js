@@ -3,15 +3,23 @@ import {when} from 'mobx';
 import store from '../store';
 import * as nav from './nav';
 import * as wallet from './wallet';
+import * as backup from './backup';
+import * as userId from './user-id';
 
 when(
   () => store.navReady,
   async () => {
+    backup.init();
     const hasWallet = await wallet.loadFromDisk();
     if (hasWallet) {
       nav.reset('Main');
+      return;
+    }
+    const hasBackup = await backup.checkBackup();
+    if (!hasBackup) {
+      backup.initBackup();
     } else {
-      nav.reset('Backup');
+      backup.initRestore();
     }
   },
 );
@@ -22,6 +30,7 @@ when(
     wallet.loadXpub();
     wallet.loadBalance();
     wallet.loadTransactions();
+    await userId.init();
     await wallet.initElectrumClient();
   },
 );

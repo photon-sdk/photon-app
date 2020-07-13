@@ -5,7 +5,7 @@ import {observer} from 'mobx-react';
 import {TextInput} from '../component/input';
 
 import store from '../store';
-import * as backup from '../action/backup';
+import * as userId from '../action/user-id';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -29,25 +29,25 @@ const styles = StyleSheet.create({
   },
 });
 
-const VerifyScreen = () => (
+const EmailSetScreen = () => (
   <View style={styles.wrapper}>
-    <Text style={styles.h1}>Enter the code sent to {store.phone}</Text>
+    <Text style={styles.h1}>Enter your email address</Text>
     <TextInput
-      placeholder="code"
-      keyboardType="number-pad"
-      style={styles.input}
+      placeholder="email"
+      keyboardType="email-address"
       autoFocus
-      value={store.code}
-      onChangeText={code => backup.setCode(code)}
+      style={styles.input}
+      value={store.userId.email}
+      onChangeText={email => userId.setEmail(email)}
     />
     <View style={styles.btnWrapper}>
       <Button
         title="Next"
         style={styles.btnNext}
-        onPress={() => backup.checkCode()}
+        onPress={() => userId.initPinSet()}
       />
     </View>
   </View>
 );
 
-export default observer(VerifyScreen);
+export default observer(EmailSetScreen);
