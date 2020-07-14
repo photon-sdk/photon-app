@@ -1,8 +1,11 @@
 import React, {Component} from 'react';
 import {TextInput as RNTextInput, StyleSheet} from 'react-native';
+import {font} from './style';
 
 const baseStyles = StyleSheet.create({
   input: {
+    fontSize: font.sizeL,
+    height: font.lineHeightL + 2 * 12,
     padding: 0,
   },
 });
