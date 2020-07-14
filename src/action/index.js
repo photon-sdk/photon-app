@@ -30,7 +30,7 @@ when(
     wallet.loadXpub();
     wallet.loadBalance();
     wallet.loadTransactions();
-    await userId.init();
+    await userId.fetchUserIds();
     await wallet.initElectrumClient();
   },
 );
