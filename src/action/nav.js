@@ -12,8 +12,8 @@ export function goBack() {
   _navigatorRef.dispatch(CommonActions.goBack());
 }
 
-export function goTo(name) {
-  _navigatorRef.dispatch(CommonActions.navigate({name}));
+export function goTo(name, params) {
+  _navigatorRef.dispatch(CommonActions.navigate({name, params}));
 }
 
 export function reset(name) {
