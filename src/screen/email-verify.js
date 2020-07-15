@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const EmailVerifyScreen = () => (
+const EmailVerifyScreen = ({route}) => (
   <Background>
     <MainContent>
       <H1Text>Enter the code sent to {store.userId.email}</H1Text>
@@ -35,7 +35,7 @@ const EmailVerifyScreen = () => (
       />
       <Spacer />
       <View style={styles.btnWrapper}>
-        <PillButton onPress={() => userId.validateEmailCode()}>Next</PillButton>
+        <PillButton onPress={() => route.params.onNext()}>Next</PillButton>
       </View>
     </MainContent>
   </Background>

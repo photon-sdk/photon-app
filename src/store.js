@@ -20,6 +20,7 @@ export default observable({
     email: '',
     code: '',
     pin: '',
+    delay: null,
   },
   settings: {
     email: null,

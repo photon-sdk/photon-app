@@ -9,6 +9,7 @@ import {MainContent, Spacer} from '../component/layout';
 import {Background} from '../component/background';
 
 import store from '../store';
+import * as userId from '../action/user-id';
 import * as backup from '../action/backup';
 
 const styles = StyleSheet.create({
@@ -43,7 +44,7 @@ const RestoreScreen = () => (
         <PillButton style={styles.btnNext} onPress={() => backup.validatePin()}>
           Next
         </PillButton>
-        <Button title="Forgot PIN?" onPress={() => backup.initPinReset()} />
+        <Button title="Forgot PIN?" onPress={() => userId.initPinReset()} />
       </View>
     </MainContent>
   </Background>

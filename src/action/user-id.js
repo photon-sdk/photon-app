@@ -2,6 +2,8 @@ import {KeyBackup} from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as nav from './nav';
+import * as alert from './alert';
+import * as backup from './backup';
 
 //
 // Init
@@ -40,16 +42,12 @@ export function setPin(pin) {
 export async function validateEmailPin() {
   try {
     initEmailVerify();
-    await _registerEmail();
+    const {email, pin} = store.userId;
+    await KeyBackup.registerEmail({userId: email, pin});
   } catch (err) {
     initPinSet();
-    console.error(err);
+    alert.error({err});
   }
-}
-
-async function _registerEmail() {
-  const {email, pin} = store.userId;
-  await KeyBackup.registerEmail({userId: email, pin});
 }
 
 //
@@ -58,7 +56,9 @@ async function _registerEmail() {
 
 export function initEmailVerify() {
   store.userId.code = '';
-  nav.goTo('EmailVerify');
+  nav.goTo('EmailVerify', {
+    onNext: validateEmailCode,
+  });
 }
 
 export function setCode(code) {
@@ -68,16 +68,77 @@ export function setCode(code) {
 export async function validateEmailCode() {
   try {
     nav.goTo('EmailWait');
-    await _verifyEmail();
+    const {email, code} = store.userId;
+    await KeyBackup.verifyEmail({userId: email, code});
     await fetchUserIds();
     nav.goTo('Settings');
   } catch (err) {
-    nav.goTo('EmailVerify');
-    console.error(err);
+    initEmailVerify();
+    alert.error({err});
   }
 }
 
-async function _verifyEmail() {
-  const {email, code} = store.userId;
-  await KeyBackup.verifyEmail({userId: email, code});
+//
+// Restore screen
+//
+
+export async function initPinReset() {
+  try {
+    nav.goTo('PinResetWait');
+    store.userId.email = await KeyBackup.getEmail();
+    if (!store.userId.email) {
+      backup.initRestore();
+      return alert.info('PIN Reset Failed', 'No recovery email address.');
+    }
+    await KeyBackup.initPinReset({userId: store.userId.email});
+    initPinResetVerify();
+  } catch (err) {
+    backup.initRestore();
+    alert.error({err});
+  }
+}
+
+//
+// Pin Reset Verify screen
+//
+
+export function initPinResetVerify() {
+  store.userId.code = '';
+  nav.goTo('PinResetVerify', {
+    onNext: verifyPinReset,
+  });
+}
+
+export async function verifyPinReset() {
+  try {
+    nav.goTo('PinResetWait');
+    const {email, code} = store.userId;
+    store.userId.delay = await KeyBackup.verifyPinReset({userId: email, code});
+    const {delay} = store.userId;
+    if (delay) {
+      backup.initRestore();
+      return alert.info(
+        'PIN Reset Initialized',
+        `For your security PIN reset is locked until ${new Date(delay)}.`,
+      );
+    }
+    initPinResetFinalize();
+  } catch (err) {
+    backup.initRestore();
+    alert.error({err});
+  }
+}
+
+//
+// Pin Reset Finalize screen
+//
+
+export function initPinResetFinalize() {
+  store.userId.code = '';
+  nav.goTo('PinResetFinalize');
+}
+
+export async function finalizePinReset() {
+  const {email, code, newPin} = store.userId;
+  await KeyBackup.finalizePinReset({userId: email, code, newPin});
 }

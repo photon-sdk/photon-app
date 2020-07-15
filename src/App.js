@@ -19,6 +19,7 @@ import EmailVerifyScreen from './screen/email-verify';
 import WaitScreen from './screen/wait';
 
 const BackupStack = createStackNavigator();
+const RestoreStack = createStackNavigator();
 const EmailSetStack = createStackNavigator();
 const MainStack = createBottomTabNavigator();
 const RootStack = createStackNavigator();
@@ -36,6 +37,34 @@ const BackupStackScreen = () => (
       options={{title: 'Verify PIN'}}
     />
   </BackupStack.Navigator>
+);
+
+const RestoreStackScreen = () => (
+  <RestoreStack.Navigator>
+    <RestoreStack.Screen
+      name="RestorePin"
+      component={RestoreScreen}
+      options={{title: 'Restore Wallet'}}
+    />
+    <RestoreStack.Screen
+      name="PinResetWait"
+      component={WaitScreen}
+      options={{headerShown: false}}
+    />
+    <EmailSetStack.Screen
+      name="PinResetVerify"
+      component={EmailVerifyScreen}
+      options={{
+        title: 'Verify PIN Reset',
+        headerLeft: () => (
+          <HeaderBackButton
+            label="Restore"
+            onPress={() => nav.goTo('RestorePin')}
+          />
+        ),
+      }}
+    />
+  </RestoreStack.Navigator>
 );
 
 const EmailSetStackScreen = () => (
@@ -107,8 +136,8 @@ const App = () => (
       />
       <RootStack.Screen
         name="Restore"
-        component={RestoreScreen}
-        options={{title: 'Restore Wallet'}}
+        component={RestoreStackScreen}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="Main"
