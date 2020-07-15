@@ -84,7 +84,7 @@ export async function validateEmailCode() {
 
 export async function initPinReset() {
   try {
-    nav.goTo('PinResetWait');
+    nav.goTo('RestoreWait');
     store.userId.email = await KeyBackup.getEmail();
     if (!store.userId.email) {
       backup.initRestore();
@@ -104,14 +104,14 @@ export async function initPinReset() {
 
 export function initPinResetVerify() {
   store.userId.code = '';
-  nav.goTo('PinResetVerify', {
+  nav.goTo('RestorePinResetVerify', {
     onNext: verifyPinReset,
   });
 }
 
 export async function verifyPinReset() {
   try {
-    nav.goTo('PinResetWait');
+    nav.goTo('RestoreWait');
     const {email, code} = store.userId;
     store.userId.delay = await KeyBackup.verifyPinReset({userId: email, code});
     const {delay} = store.userId;
@@ -135,7 +135,7 @@ export async function verifyPinReset() {
 
 export function initPinResetFinalize() {
   store.userId.code = '';
-  nav.goTo('PinResetFinalize');
+  nav.goTo('RestorePinResetFinalize');
 }
 
 export async function finalizePinReset() {

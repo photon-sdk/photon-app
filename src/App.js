@@ -42,24 +42,24 @@ const BackupStackScreen = () => (
 const RestoreStackScreen = () => (
   <RestoreStack.Navigator>
     <RestoreStack.Screen
-      name="RestorePin"
+      name="RestorePinEnter"
       component={RestoreScreen}
       options={{title: 'Restore Wallet'}}
     />
     <RestoreStack.Screen
-      name="PinResetWait"
+      name="RestoreWait"
       component={WaitScreen}
       options={{headerShown: false}}
     />
-    <EmailSetStack.Screen
-      name="PinResetVerify"
+    <RestoreStack.Screen
+      name="RestorePinResetVerify"
       component={EmailVerifyScreen}
       options={{
         title: 'Verify PIN Reset',
         headerLeft: () => (
           <HeaderBackButton
             label="Restore"
-            onPress={() => nav.goTo('RestorePin')}
+            onPress={() => nav.goTo('RestorePinEnter')}
           />
         ),
       }}
