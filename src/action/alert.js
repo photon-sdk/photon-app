@@ -6,5 +6,7 @@ export function info(title, message) {
 
 export function error({title, message, err}) {
   Alert.alert(title, message || err.message);
-  console.error(err);
+  if (err) {
+    console.error(err);
+  }
 }
