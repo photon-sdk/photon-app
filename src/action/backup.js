@@ -33,21 +33,11 @@ export function setPin(pin) {
 }
 
 export async function validateNewPin() {
-  try {
-    _validateNewPin();
-    nav.goTo('PinVerify');
-  } catch (err) {
-    initBackup();
-    alert.error({err});
-  }
-}
-
-function _validateNewPin() {
   const {pin} = store.backup;
   if (!pin || pin.length < 6) {
-    throw new Error('PIN must be at least 6 digits!');
+    return alert.error({message: 'PIN must be at least 6 digits!'});
   }
-  return pin;
+  nav.goTo('BackupPinVerify');
 }
 
 //
@@ -59,22 +49,18 @@ export function setPinVerify(pin) {
 }
 
 export async function validatePinVerify() {
-  try {
-    const pin = _validatePinVerify();
-    nav.reset('Main');
-    await _generateWalletAndBackup(pin);
-  } catch (err) {
-    initBackup();
-    alert.error({err});
-  }
-}
-
-function _validatePinVerify() {
   const {pin, pinVerify} = store.backup;
   if (pin !== pinVerify) {
-    throw new Error("PINs don't match!");
+    return alert.error({message: "PINs don't match!"});
   }
-  return pin;
+  try {
+    nav.goTo('BackupWait');
+    await _generateWalletAndBackup(pin);
+    nav.reset('Main');
+  } catch (err) {
+    nav.goTo('BackupPinVerify');
+    alert.error({err});
+  }
 }
 
 async function _generateWalletAndBackup(pin) {
@@ -99,11 +85,12 @@ export function initRestore() {
 
 export async function validatePin() {
   try {
-    nav.reset('Main');
+    nav.goTo('RestoreWait');
     await _verifyPinAndRestore();
+    nav.reset('Main');
   } catch (err) {
-    initRestore();
-    alert.error({message: 'Invalid PIN', err});
+    nav.goTo('RestorePin');
+    alert.error({message: 'Invalid PIN'});
   }
 }
 

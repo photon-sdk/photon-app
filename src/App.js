@@ -27,14 +27,19 @@ const RootStack = createStackNavigator();
 const BackupStackScreen = () => (
   <BackupStack.Navigator>
     <BackupStack.Screen
-      name="PinSet"
+      name="BackupPinSet"
       component={PinSetScreen}
       options={{title: 'Set PIN'}}
     />
     <BackupStack.Screen
-      name="PinVerify"
+      name="BackupPinVerify"
       component={PinVerifyScreen}
       options={{title: 'Verify PIN'}}
+    />
+    <BackupStack.Screen
+      name="BackupWait"
+      component={WaitScreen}
+      options={{headerShown: false}}
     />
   </BackupStack.Navigator>
 );
@@ -42,7 +47,7 @@ const BackupStackScreen = () => (
 const RestoreStackScreen = () => (
   <RestoreStack.Navigator>
     <RestoreStack.Screen
-      name="RestorePinEnter"
+      name="RestorePin"
       component={RestoreScreen}
       options={{title: 'Restore Wallet'}}
     />
@@ -59,7 +64,7 @@ const RestoreStackScreen = () => (
         headerLeft: () => (
           <HeaderBackButton
             label="Restore"
-            onPress={() => nav.goTo('RestorePinEnter')}
+            onPress={() => nav.goTo('RestorePin')}
           />
         ),
       }}
