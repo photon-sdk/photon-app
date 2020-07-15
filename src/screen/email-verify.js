@@ -1,53 +1,44 @@
 import React from 'react';
-import {StyleSheet, Button, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react';
 
+import {H1Text} from '../component/text';
 import {TextInput} from '../component/input';
+import {PillButton} from '../component/button';
+import {MainContent, Spacer} from '../component/layout';
+import {Background} from '../component/background';
 
 import store from '../store';
 import * as userId from '../action/user-id';
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    padding: 15,
-  },
-  h1: {
-    fontSize: 30,
-  },
   input: {
-    marginTop: 30,
-    fontSize: 20,
-    height: 20,
+    marginTop: 20,
   },
   btnWrapper: {
-    flex: 1,
-    marginTop: 50,
-  },
-  btnNext: {
-    alignSelf: 'flex-end',
+    marginTop: 30,
+    height: 150,
   },
 });
 
 const EmailVerifyScreen = () => (
-  <View style={styles.wrapper}>
-    <Text style={styles.h1}>Enter the code sent to {store.userId.email}</Text>
-    <TextInput
-      placeholder="code"
-      keyboardType="number-pad"
-      autoFocus
-      style={styles.input}
-      value={store.userId.code}
-      onChangeText={code => userId.setCode(code)}
-    />
-    <View style={styles.btnWrapper}>
-      <Button
-        title="Next"
-        style={styles.btnNext}
-        onPress={() => userId.validateEmailCode()}
+  <Background>
+    <MainContent>
+      <H1Text>Enter the code sent to {store.userId.email}</H1Text>
+      <TextInput
+        placeholder="code"
+        keyboardType="number-pad"
+        autoFocus
+        style={styles.input}
+        value={store.userId.code}
+        onChangeText={code => userId.setCode(code)}
       />
-    </View>
-  </View>
+      <Spacer />
+      <View style={styles.btnWrapper}>
+        <PillButton onPress={() => userId.validateEmailCode()}>Next</PillButton>
+      </View>
+    </MainContent>
+  </Background>
 );
 
 export default observer(EmailVerifyScreen);

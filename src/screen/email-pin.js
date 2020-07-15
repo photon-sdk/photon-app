@@ -1,55 +1,46 @@
 import React from 'react';
-import {StyleSheet, Button, View, Text} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {observer} from 'mobx-react';
 
+import {H1Text} from '../component/text';
 import {TextInput} from '../component/input';
+import {PillButton} from '../component/button';
+import {MainContent, Spacer} from '../component/layout';
+import {Background} from '../component/background';
 
 import store from '../store';
 import * as userId from '../action/user-id';
 
 const styles = StyleSheet.create({
-  wrapper: {
-    flex: 1,
-    padding: 15,
-  },
-  h1: {
-    fontSize: 30,
-  },
   input: {
-    marginTop: 30,
-    fontSize: 20,
-    height: 20,
+    marginTop: 20,
   },
   btnWrapper: {
-    flex: 1,
-    marginTop: 50,
-  },
-  btnNext: {
-    alignSelf: 'flex-end',
+    marginTop: 30,
+    height: 150,
   },
 });
 
 const EmailPinScreen = () => (
-  <View style={styles.wrapper}>
-    <Text style={styles.h1}>Enter your PIN</Text>
-    <TextInput
-      placeholder="PIN"
-      keyboardType="number-pad"
-      textContentType="password"
-      secureTextEntry
-      autoFocus
-      style={styles.input}
-      value={store.userId.pin}
-      onChangeText={pin => userId.setPin(pin)}
-    />
-    <View style={styles.btnWrapper}>
-      <Button
-        title="Next"
-        style={styles.btnNext}
-        onPress={() => userId.validateEmailPin()}
+  <Background>
+    <MainContent>
+      <H1Text>Enter your PIN</H1Text>
+      <TextInput
+        placeholder="PIN"
+        keyboardType="number-pad"
+        textContentType="password"
+        secureTextEntry
+        autoFocus
+        style={styles.input}
+        value={store.userId.pin}
+        onChangeText={pin => userId.setPin(pin)}
       />
-    </View>
-  </View>
+      <Spacer />
+      <View style={styles.btnWrapper}>
+        <PillButton onPress={() => userId.validateEmailPin()}>Next</PillButton>
+      </View>
+    </MainContent>
+  </Background>
 );
 
 export default observer(EmailPinScreen);
