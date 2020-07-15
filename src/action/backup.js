@@ -2,6 +2,7 @@ import {HDSegwitBech32Wallet, KeyBackup} from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as nav from './nav';
+import * as alert from './alert';
 import {saveToDisk} from './wallet';
 
 //
@@ -37,7 +38,7 @@ export async function validateNewPin() {
     nav.goTo('PinVerify');
   } catch (err) {
     initBackup();
-    console.error(err);
+    alert.error({err});
   }
 }
 
@@ -64,7 +65,7 @@ export async function validatePinVerify() {
     await _generateWalletAndBackup(pin);
   } catch (err) {
     initBackup();
-    console.error(err);
+    alert.error({err});
   }
 }
 
@@ -100,10 +101,9 @@ export async function validatePin() {
   try {
     nav.reset('Main');
     await _verifyPinAndRestore();
-    console.log('Photon: PIN verified and backup restored!');
   } catch (err) {
     initRestore();
-    console.error(err);
+    alert.error({message: 'Invalid PIN', err});
   }
 }
 
