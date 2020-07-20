@@ -94,7 +94,14 @@ export async function validatePin() {
     nav.reset('Main');
   } catch (err) {
     nav.goTo('RestorePin');
-    alert.error({message: 'Invalid PIN'});
+    if (err.delay) {
+      alert.error({
+        title: 'Rate limit hit',
+        message: `Wallet restore locked until ${new Date(err.delay)}.`,
+      });
+    } else {
+      alert.error({message: 'Invalid PIN'});
+    }
   }
 }
 
