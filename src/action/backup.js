@@ -54,7 +54,9 @@ export async function validatePinVerify() {
     return alert.error({message: "PINs don't match!"});
   }
   try {
-    nav.goTo('BackupWait');
+    nav.goTo('BackupWait', {
+      message: 'Creating backup...',
+    });
     await _generateWalletAndBackup(pin);
     nav.reset('Main');
   } catch (err) {
@@ -85,7 +87,9 @@ export function initRestore() {
 
 export async function validatePin() {
   try {
-    nav.goTo('RestoreWait');
+    nav.goTo('RestoreWait', {
+      message: 'Restoring wallet...',
+    });
     await _verifyPinAndRestore();
     nav.reset('Main');
   } catch (err) {

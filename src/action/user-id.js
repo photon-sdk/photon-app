@@ -67,7 +67,9 @@ export function setCode(code) {
 
 export async function validateEmailCode() {
   try {
-    nav.goTo('EmailWait');
+    nav.goTo('EmailWait', {
+      message: 'Verifying email...',
+    });
     const {email, code} = store.userId;
     await KeyBackup.verifyEmail({userId: email, code});
     await fetchUserIds();
@@ -84,7 +86,9 @@ export async function validateEmailCode() {
 
 export async function initPinReset() {
   try {
-    nav.goTo('RestoreWait');
+    nav.goTo('RestoreWait', {
+      message: 'Starting PIN reset...',
+    });
     store.userId.email = await KeyBackup.getEmail();
     if (!store.userId.email) {
       backup.initRestore();
@@ -111,7 +115,9 @@ export function initPinResetVerify() {
 
 export async function verifyPinReset() {
   try {
-    nav.goTo('RestoreWait');
+    nav.goTo('RestoreWait', {
+      message: 'Verifying email...',
+    });
     const {email, code} = store.userId;
     store.userId.delay = await KeyBackup.verifyPinReset({userId: email, code});
     const {delay} = store.userId;
