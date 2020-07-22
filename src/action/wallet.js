@@ -32,7 +32,7 @@ function _getWallet() {
 
 export async function initElectrumClient() {
   try {
-    await ElectrumClient.connectMain(store.config.electrum);
+    await ElectrumClient.connectMain();
     await ElectrumClient.waitTillConnected();
     store.electrumConnected = true;
   } catch (err) {
