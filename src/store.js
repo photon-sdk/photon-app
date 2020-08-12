@@ -25,6 +25,11 @@ export default observable({
   settings: {
     email: null,
   },
+  send: {
+    fee: 1,
+    value: null,
+    address: null,
+  },
 
   // Persistent data
   config: {

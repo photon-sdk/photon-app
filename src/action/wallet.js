@@ -82,6 +82,21 @@ export async function saveCache() {
   await walletStore.saveToDisk();
 }
 
+export async function sendTransaction() {
+  try {
+    const {fee, value, address} = store.send;
+    const wallet = _getWallet();
+    await wallet.fetchUtxo();
+    const utxos = wallet.getUtxo();
+    const targets = [{value, address}];
+    const changeAddress = await wallet.getAddressAsync();
+    const newTx = wallet.createTransaction(utxos, targets, fee, changeAddress);
+    await wallet.broadcastTx(newTx.tx.toHex());
+  } catch (err) {
+    console.error(err);
+  }
+}
+
 //
 // Logout and cleanup
 //
