@@ -34,8 +34,8 @@ export function setPin(pin) {
 
 export async function validateNewPin() {
   const {pin} = store.backup;
-  if (!pin || pin.length < 6) {
-    return alert.error({message: 'PIN must be at least 6 digits!'});
+  if (!pin || pin.length < 4) {
+    return alert.error({message: 'PIN must be at least 4 digits!'});
   }
   nav.goTo('BackupPinVerify');
 }
