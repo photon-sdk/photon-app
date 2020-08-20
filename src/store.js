@@ -14,6 +14,7 @@ export default observable({
   // screens
   backup: {
     pin: '',
+    newPin: '',
     pinVerify: '',
   },
   userId: {

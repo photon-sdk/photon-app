@@ -77,6 +77,55 @@ async function _generateWalletAndBackup(pin) {
 }
 
 //
+// Pin Change screen
+//
+
+export function initPinChange() {
+  store.backup.pin = '';
+  store.backup.newPin = '';
+  store.backup.pinVerify = '';
+  nav.goTo('PinChange');
+}
+
+export async function validatePinChange() {
+  nav.goTo('PinChangeNew');
+}
+
+export function setNewPin(newPin) {
+  store.backup.newPin = newPin;
+}
+
+export async function validatePinChangeNew() {
+  const {newPin} = store.backup;
+  if (!newPin || newPin.length < 4) {
+    return alert.error({message: 'PIN must be at least 4 digits!'});
+  }
+  nav.goTo('PinChangeVerify');
+}
+
+export async function validatePinChangeVerify() {
+  const {newPin, pinVerify} = store.backup;
+  if (newPin !== pinVerify) {
+    return alert.error({message: "PINs don't match!"});
+  }
+  try {
+    nav.goTo('PinChangeWait', {
+      message: 'Changing PIN...',
+    });
+    await _changePin();
+    nav.goTo('Settings');
+  } catch (err) {
+    nav.goTo('PinChangeVerify');
+    alert.error({err});
+  }
+}
+
+async function _changePin() {
+  const {pin, newPin} = store.backup;
+  await KeyBackup.changePin({pin, newPin});
+}
+
+//
 // Restore screen
 //
 

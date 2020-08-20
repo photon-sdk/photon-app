@@ -10,6 +10,9 @@ import * as nav from './action/nav';
 import SplashScreen from './screen/splash';
 import PinSetScreen from './screen/pin-set';
 import PinVerifyScreen from './screen/pin-verify';
+import PinChangeCurrentScreen from './screen/pin-change-current';
+import PinChangeNewScreen from './screen/pin-change-new';
+import PinChangeVerifyScreen from './screen/pin-change-verify';
 import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
 import SettingsScreen from './screen/settings';
@@ -19,6 +22,7 @@ import EmailVerifyScreen from './screen/email-verify';
 import WaitScreen from './screen/wait';
 
 const BackupStack = createStackNavigator();
+const PinChangeStack = createStackNavigator();
 const RestoreStack = createStackNavigator();
 const EmailSetStack = createStackNavigator();
 const MainStack = createBottomTabNavigator();
@@ -42,6 +46,36 @@ const BackupStackScreen = () => (
       options={{headerShown: false}}
     />
   </BackupStack.Navigator>
+);
+
+const PinChangeStackScreen = () => (
+  <PinChangeStack.Navigator>
+    <PinChangeStack.Screen
+      name="PinChangeCurrent"
+      component={PinChangeCurrentScreen}
+      options={{
+        title: 'Enter Current PIN',
+        headerLeft: () => (
+          <HeaderBackButton label="Settings" onPress={() => nav.goBack()} />
+        ),
+      }}
+    />
+    <PinChangeStack.Screen
+      name="PinChangeNew"
+      component={PinChangeNewScreen}
+      options={{title: 'Enter New PIN'}}
+    />
+    <PinChangeStack.Screen
+      name="PinChangeVerify"
+      component={PinChangeVerifyScreen}
+      options={{title: 'Verify New PIN'}}
+    />
+    <BackupStack.Screen
+      name="PinChangeWait"
+      component={WaitScreen}
+      options={{headerShown: false}}
+    />
+  </PinChangeStack.Navigator>
 );
 
 const RestoreStackScreen = () => (
@@ -152,6 +186,11 @@ const App = () => (
       <RootStack.Screen
         name="EmailSet"
         component={EmailSetStackScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="PinChange"
+        component={PinChangeStackScreen}
         options={{headerShown: false}}
       />
     </RootStack.Navigator>
