@@ -30,11 +30,17 @@ const styles = StyleSheet.create({
   },
 });
 
-const ReceiveScreen = () => (
-  <View style={styles.wrapper}>
-    {store.nextAddress === null ? <LargeSpinner /> : <Address />}
-  </View>
-);
+const ReceiveScreen = ({navigation}) => {
+  React.useEffect(
+    () => navigation.addListener('focus', () => wallet.fetchNextAddress()),
+    [navigation],
+  );
+  return (
+    <View style={styles.wrapper}>
+      {store.nextAddress === null ? <LargeSpinner /> : <Address />}
+    </View>
+  );
+};
 
 const Address = () => (
   <View style={styles.addressWrapper}>

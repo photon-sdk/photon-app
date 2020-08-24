@@ -76,6 +76,7 @@ export async function fetchTransactions() {
 }
 
 export async function fetchNextAddress() {
+  store.nextAddress = null;
   store.nextAddress = await _getWallet().getAddressAsync();
 }
 
