@@ -27,8 +27,7 @@ const styles = StyleSheet.create({
     fontSize: font.sizeSub,
     lineHeight: font.lineHeightSub,
   },
-  btnWrapper: {
-    alignSelf: 'stretch',
+  copyBtn: {
     marginTop: 50,
   },
 });
@@ -54,9 +53,9 @@ const Address = () => (
       numberOfLines={1}>
       {store.nextAddress}
     </Text>
-    <View style={styles.btnWrapper}>
-      <PillButton onPress={() => wallet.copyAddress()}>Copy Address</PillButton>
-    </View>
+    <PillButton style={styles.copyBtn} onPress={() => wallet.copyAddress()}>
+      Copy Address
+    </PillButton>
   </View>
 );
 
