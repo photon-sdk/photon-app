@@ -15,6 +15,7 @@ import PinChangeNewScreen from './screen/pin-change-new';
 import PinChangeVerifyScreen from './screen/pin-change-verify';
 import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
+import ReceiveScreen from './screen/receive';
 import SettingsScreen from './screen/settings';
 import EmailSetScreen from './screen/email-set';
 import EmailPinScreen from './screen/email-pin';
@@ -154,7 +155,7 @@ const MainStackScreen = () => (
       },
     })}>
     <MainStack.Screen name="Wallet" component={WalletScreen} />
-    <MainStack.Screen name="Receive" component={WalletScreen} />
+    <MainStack.Screen name="Receive" component={ReceiveScreen} />
     <MainStack.Screen name="Send" component={WalletScreen} />
     <MainStack.Screen name="Settings" component={SettingsScreen} />
   </MainStack.Navigator>

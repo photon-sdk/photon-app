@@ -1,4 +1,5 @@
 import {DevSettings} from 'react-native';
+import Clipboard from '@react-native-community/clipboard';
 import {WalletStore, ElectrumClient} from '@photon-sdk/photon-lib';
 
 import store from '../store';
@@ -76,6 +77,10 @@ export async function fetchTransactions() {
 
 export async function fetchNextAddress() {
   store.nextAddress = await _getWallet().getAddressAsync();
+}
+
+export function copyAddress() {
+  Clipboard.setString(store.nextAddress);
 }
 
 export async function saveCache() {
