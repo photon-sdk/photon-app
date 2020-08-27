@@ -27,9 +27,10 @@ export default observable({
     email: null,
   },
   send: {
-    fee: 1,
     value: null,
+    feeRate: '1',
     address: null,
+    newTx: {},
   },
 
   // Persistent data

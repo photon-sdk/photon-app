@@ -19,14 +19,14 @@ export async function saveToDisk(wallet) {
 export async function loadFromDisk() {
   try {
     await walletStore.loadFromDisk();
-    store.walletReady = !!_getWallet();
+    store.walletReady = !!getWallet();
     return store.walletReady;
   } catch (err) {
     console.error(err);
   }
 }
 
-function _getWallet() {
+export function getWallet() {
   const [wallet] = walletStore.getWallets();
   return wallet;
 }
@@ -46,7 +46,7 @@ export async function initElectrumClient() {
 //
 
 export function loadXpub() {
-  store.xpub = _getWallet().getXpub();
+  store.xpub = getWallet().getXpub();
 }
 
 export function loadBalance() {
@@ -75,32 +75,32 @@ export async function fetchTransactions() {
   }
 }
 
-export async function fetchNextAddress() {
-  store.nextAddress = null;
-  store.nextAddress = await _getWallet().getAddressAsync();
+export async function saveCache() {
+  try {
+    await walletStore.saveToDisk();
+  } catch (err) {
+    console.error(err);
+  }
 }
+
+export async function update() {
+  await fetchBalance();
+  await fetchTransactions();
+  await saveCache();
+}
+
+//
+// Receive address handling
+//
 
 export function copyAddress() {
   Clipboard.setString(store.nextAddress);
 }
 
-export async function saveCache() {
-  await walletStore.saveToDisk();
-}
-
-export async function sendTransaction() {
-  try {
-    const {fee, value, address} = store.send;
-    const wallet = _getWallet();
-    await wallet.fetchUtxo();
-    const utxos = wallet.getUtxo();
-    const targets = [{value, address}];
-    const changeAddress = await wallet.getAddressAsync();
-    const newTx = wallet.createTransaction(utxos, targets, fee, changeAddress);
-    await wallet.broadcastTx(newTx.tx.toHex());
-  } catch (err) {
-    console.error(err);
-  }
+export async function fetchNextAddress() {
+  store.nextAddress = null;
+  await ElectrumClient.waitTillConnected();
+  store.nextAddress = await getWallet().getAddressAsync();
 }
 
 //

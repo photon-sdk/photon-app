@@ -38,9 +38,6 @@ when(
 when(
   () => store.walletReady && store.electrumConnected,
   async () => {
-    await wallet.fetchBalance();
-    await wallet.fetchTransactions();
-    await wallet.fetchNextAddress();
-    await wallet.saveCache();
+    await wallet.update();
   },
 );
