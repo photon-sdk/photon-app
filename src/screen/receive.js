@@ -18,7 +18,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 25,
   },
-  addressWrapper: {
+  codeWrapper: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -26,9 +27,6 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: font.sizeSub,
     lineHeight: font.lineHeightSub,
-  },
-  copyBtn: {
-    marginTop: 50,
   },
 });
 
@@ -39,23 +37,23 @@ const ReceiveScreen = ({navigation}) => {
   );
   return (
     <View style={styles.wrapper}>
-      {store.nextAddress === null ? <LargeSpinner /> : <Address />}
+      {store.nextAddress ? <Address /> : <LargeSpinner />}
     </View>
   );
 };
 
 const Address = () => (
-  <View style={styles.addressWrapper}>
-    <QRCode size={260}>{store.nextAddress}</QRCode>
-    <Text
-      style={styles.addressText}
-      adjustsFontSizeToFit={true}
-      numberOfLines={1}>
-      {store.nextAddress}
-    </Text>
-    <PillButton style={styles.copyBtn} onPress={() => wallet.copyAddress()}>
-      Copy Address
-    </PillButton>
+  <View>
+    <View style={styles.codeWrapper}>
+      <QRCode size={260}>{store.nextAddress}</QRCode>
+      <Text
+        style={styles.addressText}
+        adjustsFontSizeToFit={true}
+        numberOfLines={1}>
+        {store.nextAddress}
+      </Text>
+    </View>
+    <PillButton onPress={() => wallet.copyAddress()}>Copy Address</PillButton>
   </View>
 );
 
