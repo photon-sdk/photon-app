@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator, HeaderBackButton} from '@react-navigation/stack';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -16,6 +17,10 @@ import PinChangeVerifyScreen from './screen/pin-change-verify';
 import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
 import ReceiveScreen from './screen/receive';
+import SendAddressScreen from './screen/send-address';
+import SendAmountScreen from './screen/send-amount';
+import SendConfirmScreen from './screen/send-confirm';
+import SendSuccessScreen from './screen/send-success';
 import SettingsScreen from './screen/settings';
 import EmailSetScreen from './screen/email-set';
 import EmailPinScreen from './screen/email-pin';
@@ -23,6 +28,7 @@ import EmailVerifyScreen from './screen/email-verify';
 import WaitScreen from './screen/wait';
 
 const BackupStack = createStackNavigator();
+const SendStack = createStackNavigator();
 const PinChangeStack = createStackNavigator();
 const RestoreStack = createStackNavigator();
 const EmailSetStack = createStackNavigator();
@@ -47,6 +53,47 @@ const BackupStackScreen = () => (
       options={{headerShown: false}}
     />
   </BackupStack.Navigator>
+);
+
+const SendStackScreen = () => (
+  <SendStack.Navigator>
+    <SendStack.Screen
+      name="SendAmount"
+      component={SendAmountScreen}
+      options={{
+        title: 'Amount',
+        headerLeft: () => (
+          <HeaderBackButton label="Address" onPress={() => nav.goBack()} />
+        ),
+      }}
+    />
+    <SendStack.Screen
+      name="SendConfirm"
+      component={SendConfirmScreen}
+      options={{
+        title: 'Confirm',
+        headerLeft: () => (
+          <HeaderBackButton
+            label="Amount"
+            onPress={() => nav.goTo('SendAmount')}
+          />
+        ),
+        headerRight: () => (
+          <Button title="Cancel" onPress={() => nav.goTo('Wallet')} />
+        ),
+      }}
+    />
+    <SendStack.Screen
+      name="SendWait"
+      component={WaitScreen}
+      options={{headerShown: false}}
+    />
+    <SendStack.Screen
+      name="SendSuccess"
+      component={SendSuccessScreen}
+      options={{headerShown: false}}
+    />
+  </SendStack.Navigator>
 );
 
 const PinChangeStackScreen = () => (
@@ -156,7 +203,7 @@ const MainStackScreen = () => (
     })}>
     <MainStack.Screen name="Wallet" component={WalletScreen} />
     <MainStack.Screen name="Receive" component={ReceiveScreen} />
-    <MainStack.Screen name="Send" component={WalletScreen} />
+    <MainStack.Screen name="Send" component={SendAddressScreen} />
     <MainStack.Screen name="Settings" component={SettingsScreen} />
   </MainStack.Navigator>
 );
@@ -183,6 +230,11 @@ const App = () => (
         name="Main"
         component={MainStackScreen}
         options={{title: 'Wallet'}}
+      />
+      <RootStack.Screen
+        name="SendAmount"
+        component={SendStackScreen}
+        options={{headerShown: false}}
       />
       <RootStack.Screen
         name="EmailSet"
