@@ -1,5 +1,6 @@
 import Clipboard from '@react-native-community/clipboard';
 import {ElectrumClient} from '@photon-sdk/photon-lib';
+import urlParse from 'url-parse';
 
 import store from '../store';
 import * as nav from './nav';
@@ -26,8 +27,21 @@ export function isAddress(str) {
   return /^[a-zA-Z0-9]{26,90}$/.test(str);
 }
 
+export async function readQRCode(uri) {
+  if (store.send.address) {
+    return;
+  }
+  const {pathname: address, query} = urlParse(uri, true);
+  setAmount(query.amount || null);
+  validateAddress(address);
+}
+
 export async function pasteAddress() {
   const address = await Clipboard.getString();
+  validateAddress(address);
+}
+
+export function validateAddress(address) {
   if (!isAddress(address)) {
     return alert.error({message: 'Invalid address!'});
   }
@@ -58,7 +72,7 @@ export async function validateAmount() {
 
 export async function createTransaction() {
   let {value, feeRate, address} = store.send;
-  value = parseInt(value, 10);
+  value = value ? parseInt(value, 10) : null;
   feeRate = parseInt(feeRate, 10);
   const wallet = walletLib.getWallet();
   await wallet.fetchUtxo();
