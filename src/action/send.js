@@ -7,6 +7,8 @@ import * as nav from './nav';
 import * as alert from './alert';
 import * as walletLib from './wallet';
 
+const BLOCK_TARGET = 48; // 8 hours
+
 export async function initSendAddress() {
   store.send.value = null;
   store.send.address = null;
@@ -16,7 +18,7 @@ export async function initSendAddress() {
 export async function fetchFeeRate() {
   try {
     await ElectrumClient.waitTillConnected();
-    const satPerByte = await ElectrumClient.estimateFee(1);
+    const satPerByte = await ElectrumClient.estimateFee(BLOCK_TARGET);
     store.send.feeRate = String(satPerByte);
   } catch (err) {
     console.error(err);

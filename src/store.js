@@ -28,7 +28,7 @@ export default observable({
   },
   send: {
     value: null,
-    feeRate: '1',
+    feeRate: '2',
     address: null,
     newTx: {},
   },
