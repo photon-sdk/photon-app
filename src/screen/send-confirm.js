@@ -45,7 +45,7 @@ const SendConfirmScreen = () => (
     <View style={styles.paramsWrapper}>
       <Text style={styles.label}>Amount:</Text>
       <Text style={styles.value} adjustsFontSizeToFit={true} numberOfLines={1}>
-        {store.send.value} sats
+        {store.send.newTx.outputs[0].value} sats
       </Text>
       <Text style={styles.label}>Fee:</Text>
       <Text style={styles.fee} adjustsFontSizeToFit={true} numberOfLines={1}>
@@ -56,7 +56,7 @@ const SendConfirmScreen = () => (
         style={styles.addressText}
         adjustsFontSizeToFit={true}
         numberOfLines={1}>
-        {store.send.address}
+        {store.send.newTx.outputs[0].address}
       </Text>
     </View>
     <PillButton style={styles.nextBtn} onPress={() => send.validateSend()}>

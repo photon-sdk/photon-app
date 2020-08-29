@@ -72,7 +72,7 @@ export async function validateAmount() {
 
 export async function createTransaction() {
   let {value, feeRate, address} = store.send;
-  value = value ? parseInt(value, 10) : null;
+  value = value ? parseInt(value, 10) : undefined;
   feeRate = parseInt(feeRate, 10);
   const wallet = walletLib.getWallet();
   await wallet.fetchUtxo();

@@ -41,7 +41,7 @@ const SendAmountScreen = () => (
     <View style={styles.paramsWrapper}>
       <Text style={styles.label}>Amount (sats):</Text>
       <TextInput
-        placeholder="0"
+        placeholder="0 (send all)"
         keyboardType="number-pad"
         autoFocus
         style={styles.input}
