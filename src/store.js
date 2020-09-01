@@ -42,7 +42,7 @@ const store = observable({
       tcp: null,
       ssl: '700',
     },
-    keyServer: 'https://uctj65wt6j.execute-api.eu-central-1.amazonaws.com/dev',
+    keyServer: 'https://api.mymattress.io',
   },
 });
 
