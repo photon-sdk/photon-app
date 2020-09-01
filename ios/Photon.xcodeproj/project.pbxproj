@@ -46,7 +46,7 @@
 		00E356F21AD99517003FC87E /* PhotonTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PhotonTests.m; sourceTree = "<group>"; };
 		10735FDE51E1E317C9ECCE49 /* libPods-Photon-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Photon-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D30430047EC04A1E502A6A /* libPods-Photon.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Photon.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* Photon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Photon.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* MyMattress.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyMattress.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = Photon/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = Photon/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -176,7 +176,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* Photon.app */,
+				13B07F961A680F5B00A75B9A /* MyMattress.app */,
 				00E356EE1AD99517003FC87E /* PhotonTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* Photon-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* Photon-tvOSTests.xctest */,
@@ -196,7 +196,6 @@
 				F56B00D75683BC53C86C2FD1 /* Pods-Photon-tvOSTests.debug.xcconfig */,
 				8ADF2A474FA6055E1B33C9B8 /* Pods-Photon-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -241,7 +240,7 @@
 			);
 			name = Photon;
 			productName = Photon;
-			productReference = 13B07F961A680F5B00A75B9A /* Photon.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* MyMattress.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* Photon-tvOS */ = {
@@ -740,13 +739,14 @@
 				);
 				INFOPLIST_FILE = Photon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Photon;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mymattress.mymattress;
+				PRODUCT_NAME = MyMattress;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -762,13 +762,14 @@
 				CURRENT_PROJECT_VERSION = 3;
 				INFOPLIST_FILE = Photon/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				MARKETING_VERSION = 0.0.1;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
-				PRODUCT_NAME = Photon;
+				PRODUCT_BUNDLE_IDENTIFIER = io.mymattress.mymattress;
+				PRODUCT_NAME = MyMattress;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
