@@ -45,11 +45,11 @@ const SendConfirmScreen = () => (
     <View style={styles.paramsWrapper}>
       <Text style={styles.label}>Amount:</Text>
       <Text style={styles.value} adjustsFontSizeToFit={true} numberOfLines={1}>
-        {store.send.newTx.outputs[0].value} sats
+        {store.sendValueLabel} sats
       </Text>
       <Text style={styles.label}>Fee:</Text>
       <Text style={styles.fee} adjustsFontSizeToFit={true} numberOfLines={1}>
-        {store.send.newTx.fee} sats
+        {store.sendFeeLabel} sats
       </Text>
       <Text style={styles.label}>To:</Text>
       <Text

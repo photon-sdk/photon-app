@@ -1,6 +1,8 @@
 import {observable} from 'mobx';
+import ComputedSend from './computed/send';
+import ComputedWallet from './computed/wallet';
 
-export default observable({
+const store = observable({
   // app state
   navReady: false,
   backupExists: null,
@@ -43,3 +45,8 @@ export default observable({
     keyServer: 'https://uctj65wt6j.execute-api.eu-central-1.amazonaws.com/dev',
   },
 });
+
+ComputedSend(store);
+ComputedWallet(store);
+
+export default store;

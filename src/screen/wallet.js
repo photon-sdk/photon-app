@@ -42,7 +42,7 @@ const Balance = () => (
       style={balanceStyles.numeral}
       adjustsFontSizeToFit={true}
       numberOfLines={1}>
-      {store.balance}
+      {store.balanceLabel}
     </Text>
   </View>
 );
