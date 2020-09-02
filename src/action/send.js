@@ -88,8 +88,6 @@ export async function validateSend() {
   try {
     nav.goTo('SendSuccess');
     await broadcastTransaction();
-    await new Promise(res => setTimeout(res, 5000));
-    await walletLib.update();
   } catch (err) {
     nav.goTo('SendConfirm');
     alert.error({err});

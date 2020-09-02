@@ -3,6 +3,7 @@ import Clipboard from '@react-native-community/clipboard';
 import {WalletStore, ElectrumClient} from '@photon-sdk/photon-lib';
 
 import store from '../store';
+import {poll} from '../util';
 
 const walletStore = new WalletStore();
 
@@ -83,9 +84,13 @@ export async function saveCache() {
   }
 }
 
+export async function pollUpdate() {
+  await poll(() => update());
+}
+
 export async function update() {
   await fetchBalance();
-  await fetchTransactions();
+  // await fetchTransactions();
   await saveCache();
 }
 

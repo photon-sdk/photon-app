@@ -38,6 +38,6 @@ when(
 when(
   () => store.walletReady && store.electrumConnected,
   async () => {
-    await wallet.update();
+    await wallet.pollUpdate();
   },
 );
