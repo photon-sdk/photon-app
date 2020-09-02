@@ -1,11 +1,10 @@
 const NAP_DELAY = 5000;
-const RETRY_DELAY = 10000;
 
 export function nap(ms = NAP_DELAY) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function poll(api, interval = RETRY_DELAY, retries = Infinity) {
+export async function poll(api, interval = NAP_DELAY, retries = Infinity) {
   while (retries--) {
     const response = await api();
     if (response) {
