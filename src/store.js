@@ -42,7 +42,7 @@ const store = observable({
       tcp: null,
       ssl: '700',
     },
-    keyServer: 'https://api.mymattress.io',
+    keyServer: 'https://keys.mymattress.io',
   },
 });
 
