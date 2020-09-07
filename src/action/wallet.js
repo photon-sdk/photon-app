@@ -3,7 +3,7 @@ import Clipboard from '@react-native-community/clipboard';
 import {WalletStore, ElectrumClient} from '@photon-sdk/photon-lib';
 
 import store from '../store';
-import {poll} from '../util';
+import {poll, nap} from '../util';
 
 const walletStore = new WalletStore();
 
@@ -104,7 +104,9 @@ export function copyAddress() {
 
 export async function fetchNextAddress() {
   store.nextAddress = null;
-  await ElectrumClient.waitTillConnected();
+  while (!store.electrumConnected) {
+    await nap(100);
+  }
   store.nextAddress = await getWallet().getAddressAsync();
 }
 

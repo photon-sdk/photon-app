@@ -3,6 +3,7 @@ import {ElectrumClient} from '@photon-sdk/photon-lib';
 import urlParse from 'url-parse';
 
 import store from '../store';
+import {nap} from '../util';
 import * as nav from './nav';
 import * as alert from './alert';
 import * as walletLib from './wallet';
@@ -17,7 +18,9 @@ export async function initSendAddress() {
 
 export async function fetchFeeRate() {
   try {
-    await ElectrumClient.waitTillConnected();
+    while (!store.electrumConnected) {
+      await nap(100);
+    }
     const satPerByte = await ElectrumClient.estimateFee(BLOCK_TARGET);
     store.send.feeRate = String(satPerByte);
   } catch (err) {
