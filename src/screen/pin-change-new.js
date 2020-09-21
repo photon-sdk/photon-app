@@ -26,7 +26,7 @@ const PinChangeNewScreen = () => (
     <MainContent>
       <H1Text>Set a new PIN</H1Text>
       <TextInput
-        placeholder="PIN"
+        placeholder="PIN (at least 4 digits)"
         keyboardType="number-pad"
         textContentType="newPassword"
         secureTextEntry
