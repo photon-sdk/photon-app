@@ -10,3 +10,23 @@ export function error({title, message, err}) {
     console.error(err);
   }
 }
+
+export function confirm({title, message, onOk}) {
+  Alert.alert(
+    title,
+    message,
+    [
+      {
+        text: 'Cancel',
+        style: 'cancel',
+      },
+      {
+        text: 'OK',
+        onPress: () => onOk(),
+      },
+    ],
+    {
+      cancelable: true,
+    },
+  );
+}
