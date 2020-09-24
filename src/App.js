@@ -246,7 +246,7 @@ const App = () => (
       <RootStack.Screen
         name="Main"
         component={MainStackScreen}
-        options={{title: 'Wallet'}}
+        options={{title: 'MyMattress'}}
       />
       <RootStack.Screen
         name="SendAmount"
