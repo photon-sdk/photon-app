@@ -14,6 +14,7 @@ import PinVerifyScreen from './screen/pin-verify';
 import PinChangeCurrentScreen from './screen/pin-change-current';
 import PinChangeNewScreen from './screen/pin-change-new';
 import PinChangeVerifyScreen from './screen/pin-change-verify';
+import PinCheckScreen from './screen/pin-check';
 import RestoreScreen from './screen/restore';
 import WalletScreen from './screen/wallet';
 import ReceiveScreen from './screen/receive';
@@ -30,6 +31,7 @@ import WaitScreen from './screen/wait';
 const BackupStack = createStackNavigator();
 const SendStack = createStackNavigator();
 const PinChangeStack = createStackNavigator();
+const PinCheckStack = createStackNavigator();
 const RestoreStack = createStackNavigator();
 const EmailSetStack = createStackNavigator();
 const MainStack = createBottomTabNavigator();
@@ -124,6 +126,16 @@ const PinChangeStackScreen = () => (
       options={{headerShown: false}}
     />
   </PinChangeStack.Navigator>
+);
+
+const PinCheckStackScreen = () => (
+  <PinCheckStack.Navigator>
+    <PinCheckStack.Screen
+      name="PinCheck"
+      component={PinCheckScreen}
+      options={{title: 'Unlock Wallet'}}
+    />
+  </PinCheckStack.Navigator>
 );
 
 const RestoreStackScreen = () => (
@@ -224,6 +236,11 @@ const App = () => (
       <RootStack.Screen
         name="Restore"
         component={RestoreStackScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="PinCheck"
+        component={PinCheckStackScreen}
         options={{headerShown: false}}
       />
       <RootStack.Screen
