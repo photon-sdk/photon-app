@@ -73,7 +73,7 @@ async function _generateWalletAndBackup(pin) {
   // cloud backup of encrypted seed
   const data = {mnemonic};
   await KeyBackup.createBackup({data, pin});
-  await saveToDisk(wallet);
+  await saveToDisk(wallet, pin);
 }
 
 //
@@ -164,5 +164,5 @@ async function _verifyPinAndRestore() {
   if (!wallet.validateMnemonic()) {
     throw Error('Cannot validate mnemonic');
   }
-  await saveToDisk(wallet);
+  await saveToDisk(wallet, pin);
 }
