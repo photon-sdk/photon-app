@@ -136,7 +136,11 @@ export async function logout() {
   try {
     await _stopElectrumClient();
     await _wipeCache();
-    DevSettings.reload();
+    alert.confirm({
+      title: 'Logout',
+      message: 'Wipe app storage and restart?',
+      onOk: () => DevSettings.reload(),
+    });
   } catch (err) {
     console.error(err);
   }
