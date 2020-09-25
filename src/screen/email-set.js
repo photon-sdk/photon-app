@@ -42,7 +42,8 @@ const EmailSetScreen = () => (
         onChangeText={email => userId.setEmail(email)}
       />
       <Text style={styles.hint}>
-        Use a different email than your iCloud account.
+        Your email is used in case you forget your PIN. Use a different one than
+        your iCloud account.
       </Text>
       <Spacer />
       <View style={styles.btnWrapper}>
