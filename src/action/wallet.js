@@ -40,6 +40,16 @@ export async function checkPin() {
   try {
     const {pin} = store.backup;
     const storedPin = await walletStore.getItem(PIN_KEY);
+    // migration to local PIN storage ...
+    if (!storedPin) {
+      return alert.confirm({
+        title: 'Heads up',
+        message:
+          'No PIN stored in local keychain. Wipe app storage and restart?',
+        onOk: () => _wipeAndRestart(),
+      });
+    }
+    // ... migration end
     if (storedPin === pin) {
       nav.reset('Main');
     } else {
@@ -133,14 +143,18 @@ export async function fetchNextAddress() {
 //
 
 export async function logout() {
+  alert.confirm({
+    title: 'Logout',
+    message: 'Wipe app storage and restart?',
+    onOk: () => _wipeAndRestart(),
+  });
+}
+
+export async function _wipeAndRestart() {
   try {
     await _stopElectrumClient();
     await _wipeCache();
-    alert.confirm({
-      title: 'Logout',
-      message: 'Wipe app storage and restart?',
-      onOk: () => DevSettings.reload(),
-    });
+    DevSettings.reload();
   } catch (err) {
     console.error(err);
   }
