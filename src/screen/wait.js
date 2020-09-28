@@ -14,8 +14,10 @@ const styles = StyleSheet.create({
   },
   message: {
     marginTop: 25,
+    textAlign: 'center',
     fontSize: font.sizeL,
     lineHeight: font.lineHeightsL,
+    maxWidth: 250,
   },
 });
 

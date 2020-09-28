@@ -55,7 +55,7 @@ export async function validatePinVerify() {
   }
   try {
     nav.goTo('BackupWait', {
-      message: 'Creating backup...',
+      message: 'Creating encrypted\niCloud backup...',
     });
     await _generateWalletAndBackup(pin);
     nav.reset('Main');
@@ -138,7 +138,7 @@ export function initRestore() {
 export async function validatePin() {
   try {
     nav.goTo('RestoreWait', {
-      message: 'Restoring wallet...',
+      message: 'Restoring wallet\nfrom iCloud...',
     });
     await _verifyPinAndRestore();
     nav.reset('Main');
