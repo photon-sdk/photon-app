@@ -3,7 +3,7 @@ import {HDSegwitBech32Wallet, KeyBackup} from '@photon-sdk/photon-lib';
 import store from '../store';
 import * as nav from './nav';
 import * as alert from './alert';
-import {saveToDisk} from './wallet';
+import {saveToDisk, savePinToDisk} from './wallet';
 
 //
 // Init
@@ -123,6 +123,7 @@ export async function validatePinChangeVerify() {
 async function _changePin() {
   const {pin, newPin} = store.backup;
   await KeyBackup.changePin({pin, newPin});
+  await savePinToDisk(newPin);
 }
 
 //

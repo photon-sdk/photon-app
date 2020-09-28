@@ -14,8 +14,12 @@ const PIN_KEY = 'photon.pin';
 // Init and startup
 //
 
-export async function saveToDisk(wallet, pin) {
+export async function savePinToDisk(pin) {
   await walletStore.setItem(PIN_KEY, pin);
+}
+
+export async function saveToDisk(wallet, pin) {
+  await savePinToDisk(pin);
   walletStore.wallets.push(wallet);
   await walletStore.saveToDisk();
   store.walletReady = true;
