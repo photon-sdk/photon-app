@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PinChangeVerifyScreen = () => (
+const PinChangeVerifyScreen = ({route}) => (
   <Background>
     <MainContent>
       <H1Text>Verify your new PIN</H1Text>
@@ -37,9 +37,7 @@ const PinChangeVerifyScreen = () => (
       />
       <Spacer />
       <View style={styles.btnWrapper}>
-        <PillButton onPress={() => backup.validatePinChangeVerify()}>
-          Next
-        </PillButton>
+        <PillButton onPress={() => route.params.onNext()}>Next</PillButton>
       </View>
     </MainContent>
   </Background>

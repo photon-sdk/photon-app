@@ -88,7 +88,9 @@ export function initPinChange() {
 }
 
 export async function validatePinChange() {
-  nav.goTo('PinChangeNew');
+  nav.goTo('PinChangeNew', {
+    onNext: validatePinChangeNew,
+  });
 }
 
 export function setNewPin(newPin) {
@@ -100,7 +102,9 @@ export async function validatePinChangeNew() {
   if (!newPin || newPin.length < 4) {
     return alert.error({message: 'PIN must be at least 4 digits!'});
   }
-  nav.goTo('PinChangeVerify');
+  nav.goTo('PinChangeVerify', {
+    onNext: validatePinChangeVerify,
+  });
 }
 
 export async function validatePinChangeVerify() {

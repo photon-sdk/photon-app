@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const PinChangeNewScreen = () => (
+const PinChangeNewScreen = ({route}) => (
   <Background>
     <MainContent>
       <H1Text>Set a new PIN</H1Text>
@@ -37,9 +37,7 @@ const PinChangeNewScreen = () => (
       />
       <Spacer />
       <View style={styles.btnWrapper}>
-        <PillButton onPress={() => backup.validatePinChangeNew()}>
-          Next
-        </PillButton>
+        <PillButton onPress={() => route.params.onNext()}>Next</PillButton>
       </View>
     </MainContent>
   </Background>
