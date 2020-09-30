@@ -151,7 +151,7 @@ const RestoreStackScreen = () => (
       options={{headerShown: false}}
     />
     <RestoreStack.Screen
-      name="RestorePinResetVerify"
+      name="RestorePinResetCode"
       component={EmailVerifyScreen}
       options={{
         title: 'Verify PIN Reset',
@@ -162,6 +162,16 @@ const RestoreStackScreen = () => (
           />
         ),
       }}
+    />
+    <RestoreStack.Screen
+      name="RestorePinResetNewPin"
+      component={PinChangeNewScreen}
+      options={{title: 'Enter New PIN'}}
+    />
+    <RestoreStack.Screen
+      name="RestorePinResetPinVerify"
+      component={PinChangeVerifyScreen}
+      options={{title: 'Verify New PIN'}}
     />
   </RestoreStack.Navigator>
 );

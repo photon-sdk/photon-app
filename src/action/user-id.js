@@ -95,7 +95,7 @@ export async function initPinReset() {
       return alert.info('PIN Reset Failed', 'No recovery email address.');
     }
     await KeyBackup.initPinReset({userId: store.userId.email});
-    initPinResetVerify();
+    initPinResetCode();
   } catch (err) {
     backup.initRestore();
     alert.error({err});
@@ -106,45 +106,60 @@ export async function initPinReset() {
 // Pin Reset Verify screen
 //
 
-export function initPinResetVerify() {
+export function initPinResetCode() {
   store.userId.code = '';
-  nav.goTo('RestorePinResetVerify', {
+  nav.goTo('RestorePinResetCode', {
+    onNext: initPinResetNewPin,
+  });
+}
+
+export function initPinResetNewPin() {
+  store.backup.newPin = '';
+  nav.goTo('RestorePinResetNewPin', {
+    onNext: validatePinResetNewPin,
+  });
+}
+
+export async function validatePinResetNewPin() {
+  const {newPin} = store.backup;
+  if (!newPin || newPin.length < 4) {
+    return alert.error({message: 'PIN must be at least 4 digits!'});
+  }
+  initPinResetPinVerify();
+}
+
+export function initPinResetPinVerify() {
+  store.backup.pinVerify = '';
+  nav.goTo('RestorePinResetPinVerify', {
     onNext: verifyPinReset,
   });
 }
 
 export async function verifyPinReset() {
+  const {newPin, pinVerify} = store.backup;
+  const {email: userId, code} = store.userId;
+  if (newPin !== pinVerify) {
+    return alert.error({message: "PINs don't match!"});
+  }
   try {
     nav.goTo('RestoreWait', {
-      message: 'Verifying email...',
+      message: 'Verifying PIN reset...',
     });
-    const {email, code} = store.userId;
-    store.userId.delay = await KeyBackup.verifyPinReset({userId: email, code});
-    const {delay} = store.userId;
+    const delay = await KeyBackup.verifyPinReset({userId, code, newPin});
+    backup.initRestore();
     if (delay) {
-      backup.initRestore();
-      return alert.info(
+      alert.info(
         'PIN Reset Initialized',
         `For your security PIN reset is locked until ${new Date(delay)}.`,
       );
+    } else {
+      alert.info(
+        'PIN Reset Successful',
+        'You can now use your new PIN to restore your wallet.',
+      );
     }
-    initPinResetFinalize();
   } catch (err) {
     backup.initRestore();
     alert.error({err});
   }
-}
-
-//
-// Pin Reset Finalize screen
-//
-
-export function initPinResetFinalize() {
-  store.userId.code = '';
-  nav.goTo('RestorePinResetFinalize');
-}
-
-export async function finalizePinReset() {
-  const {email, code, newPin} = store.userId;
-  await KeyBackup.finalizePinReset({userId: email, code, newPin});
 }
