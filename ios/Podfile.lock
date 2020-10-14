@@ -314,7 +314,7 @@ PODS:
     - React
   - RNGestureHandler (1.6.1):
     - React
-  - RNICloudStore (0.1.0):
+  - RNICloudStore (1.0.0):
     - React
   - RNKeychain (6.0.0):
     - React
@@ -385,7 +385,7 @@ DEPENDENCIES:
   - "RNCClipboard (from `../node_modules/@react-native-community/clipboard`)"
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
-  - RNICloudStore (from `../node_modules/react-native-icloudstore`)
+  - "RNICloudStore (from `../node_modules/@photon-sdk/react-native-icloudstore`)"
   - RNKeychain (from `../node_modules/react-native-keychain`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
@@ -474,7 +474,7 @@ EXTERNAL SOURCES:
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNICloudStore:
-    :path: "../node_modules/react-native-icloudstore"
+    :path: "../node_modules/@photon-sdk/react-native-icloudstore"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
   RNReanimated:
@@ -532,7 +532,7 @@ SPEC CHECKSUMS:
   RNCClipboard: 5f3218dcdc28405aa2ae72b78e388f150b826dd3
   RNCMaskedView: f5c7d14d6847b7b44853f7acb6284c1da30a3459
   RNGestureHandler: 8f09cd560f8d533eb36da5a6c5a843af9f056b38
-  RNICloudStore: bc6e225811637c09bd1eb055d6cd7448e61cd451
+  RNICloudStore: 362689ac52d08e3f6b375625a53dfde68a1a5974
   RNKeychain: bf2d7e9a0ae7a073c07770dd2aa6d11c67581733
   RNReanimated: 955cf4068714003d2f1a6e2bae3fb1118f359aff
   RNScreens: cf198f915f8a2bf163de94ca9f5bfc8d326c3706
