@@ -2,13 +2,13 @@ import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import {observer} from 'mobx-react';
 
-import {LargeSpinner} from '../component/spinner';
+import {MainContent} from '../component/layout';
 
 import store from '../store';
+import * as wallet from '../action/wallet';
 
 const styles = StyleSheet.create({
   wrapper: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     padding: 25,
@@ -16,9 +16,12 @@ const styles = StyleSheet.create({
 });
 
 const WalletScreen = () => (
-  <View style={styles.wrapper}>
-    {store.balance === null ? <LargeSpinner /> : <Balance />}
-  </View>
+  <MainContent
+    style={styles.wrapper}
+    refreshing={store.balanceRefreshing}
+    onRefresh={() => wallet.update()}>
+    <Balance />
+  </MainContent>
 );
 
 const balanceStyles = StyleSheet.create({

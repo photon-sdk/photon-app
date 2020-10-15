@@ -10,6 +10,7 @@ const store = observable({
   electrumConnected: false,
   xpub: null,
   balance: null,
+  balanceRefreshing: false,
   transactions: [],
   nextAddress: null,
 

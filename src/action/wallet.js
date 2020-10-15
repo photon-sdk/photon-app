@@ -116,14 +116,15 @@ export async function saveCache() {
   }
 }
 
-export async function pollUpdate() {
-  await poll(() => update());
-}
-
 export async function update() {
+  store.balanceRefreshing = true;
+  while (!store.walletReady || !store.electrumConnected) {
+    await nap(100);
+  }
   await fetchBalance();
   // await fetchTransactions();
   await saveCache();
+  store.balanceRefreshing = false;
 }
 
 //

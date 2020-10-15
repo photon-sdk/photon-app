@@ -30,14 +30,10 @@ when(
     wallet.loadXpub();
     wallet.loadBalance();
     wallet.loadTransactions();
-    await userId.fetchUserIds();
-    await wallet.initElectrumClient();
-  },
-);
-
-when(
-  () => store.walletReady && store.electrumConnected,
-  async () => {
-    await wallet.pollUpdate();
+    await Promise.all([
+      wallet.initElectrumClient(),
+      wallet.update(),
+      userId.fetchUserIds(),
+    ]);
   },
 );
