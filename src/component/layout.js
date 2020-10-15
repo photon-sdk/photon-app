@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, RefreshControl, StyleSheet} from 'react-native';
 
 //
 // Main Content
@@ -12,10 +12,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export const MainContent = ({children, style}) => (
+export const MainContent = ({children, style, refreshing, onRefresh}) => (
   <ScrollView
     contentContainerStyle={[styles.content, style]}
-    keyboardShouldPersistTaps="handled">
+    keyboardShouldPersistTaps="handled"
+    refreshControl={
+      onRefresh ? (
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      ) : null
+    }>
     {children}
   </ScrollView>
 );
