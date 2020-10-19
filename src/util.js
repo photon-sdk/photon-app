@@ -23,3 +23,7 @@ export const formatNumber = val => {
   const options = {maximumFractionDigits: 8};
   return new Intl.NumberFormat(undefined, options).format(num);
 };
+
+export const btcToSat = val => {
+  return Math.round(Number(val) * 100000000);
+};

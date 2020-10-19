@@ -3,7 +3,7 @@ import {ElectrumClient} from '@photon-sdk/photon-lib';
 import urlParse from 'url-parse';
 
 import store from '../store';
-import {nap} from '../util';
+import {nap, btcToSat} from '../util';
 import * as nav from './nav';
 import * as alert from './alert';
 import * as walletLib from './wallet';
@@ -36,8 +36,11 @@ export async function readQRCode(uri) {
   if (store.send.address) {
     return;
   }
-  const {pathname: address, query} = urlParse(uri, true);
-  setAmount(query.amount || null);
+  const {
+    pathname: address,
+    query: {amount},
+  } = urlParse(uri, true);
+  setAmount(amount ? String(btcToSat(amount)) : null);
   validateAddress(address);
 }
 
