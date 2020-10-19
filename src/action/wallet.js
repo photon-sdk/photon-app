@@ -5,7 +5,7 @@ import {WalletStore, ElectrumClient} from '@photon-sdk/photon-lib';
 import store from '../store';
 import * as nav from './nav';
 import * as alert from './alert';
-import {poll, nap} from '../util';
+import {nap} from '../util';
 
 const walletStore = new WalletStore();
 const PIN_KEY = 'photon.pin';
