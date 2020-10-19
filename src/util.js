@@ -4,17 +4,6 @@ export function nap(ms = NAP_DELAY) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export async function poll(api, interval = NAP_DELAY, retries = Infinity) {
-  while (retries--) {
-    const response = await api();
-    if (response) {
-      return response;
-    }
-    await nap(interval);
-  }
-  throw new Error('Maximum retries for polling reached');
-}
-
 export const formatNumber = val => {
   let num = Number(val);
   if (isNaN(num)) {
