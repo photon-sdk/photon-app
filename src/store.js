@@ -39,9 +39,9 @@ const store = observable({
   // Persistent data
   config: {
     electrum: {
-      host: 'blockstream.info',
-      tcp: null,
-      ssl: '700',
+      host: 'electrum1.bluewallet.io',
+      tcp: '50001',
+      ssl: null,
     },
     keyServer: 'https://keys.mymattress.io',
   },

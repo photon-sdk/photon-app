@@ -43,7 +43,7 @@ export const ContentWrapper = ({children, style}) => (
     <StatusBar barStyle="dark-content" />
     <KeyboardAvoidingView
       style={[wrapperStyles.avoid, style]}
-      behavior="padding">
+      behavior={Platform.OS === 'android' ? null : 'padding'}>
       {children}
     </KeyboardAvoidingView>
   </SafeAreaView>

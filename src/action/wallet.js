@@ -66,7 +66,7 @@ export async function checkPin() {
 
 export async function initElectrumClient() {
   try {
-    await ElectrumClient.connectMain();
+    await ElectrumClient.connectMain(store.config.electrum);
     await ElectrumClient.waitTillConnected();
     store.electrumConnected = true;
   } catch (err) {
