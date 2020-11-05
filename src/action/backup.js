@@ -13,6 +13,14 @@ export function init() {
   KeyBackup.init({keyServerURI: store.config.keyServer});
 }
 
+export async function authenticate() {
+  try {
+    await KeyBackup.authenticate();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
 export async function checkBackup() {
   store.backupExists = await KeyBackup.checkForExistingBackup();
   return store.backupExists;
