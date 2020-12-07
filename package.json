@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@photon-sdk/photon-lib": "^0.6.0",
+    "@photon-sdk/photon-lib": "^0.7.0",
     "@photon-sdk/react-native-icloudstore": "^1.0.0",
     "@photon-sdk/react-native-tcp": "^6.3.0",
     "@react-native-community/async-storage": "^1.10.0",
