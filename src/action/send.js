@@ -1,4 +1,7 @@
 import Clipboard from '@react-native-community/clipboard';
+import RNShare from 'react-native-share';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
 import {ElectrumClient} from '@photon-sdk/photon-lib';
 import urlParse from 'url-parse';
 
@@ -88,6 +91,38 @@ export async function createTransaction() {
   const target = [{value, address}];
   const changeTo = await wallet.getAddressAsync();
   store.send.newTx = wallet.createTransaction(utxo, target, feeRate, changeTo);
+}
+
+export async function exportPsbt() {
+  try {
+    await _sharePsbtFile();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _sharePsbtFile() {
+  const psbtBase64 = store.send.newTx.psbt.toBase64();
+  await RNShare.open({
+    url: `data:application/octet-stream/psbt;base64,${psbtBase64}`,
+  });
+}
+
+export async function importSignedPbst() {
+  try {
+    await _importPbstFile();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _importPbstFile() {
+  const res = await DocumentPicker.pick({
+    type: [DocumentPicker.types.allFiles],
+  });
+  const psbtBase64 = await RNFS.readFile(res.uri, 'base64');
+  const wallet = walletLib.getWallet();
+  store.send.newTx = wallet.combinePsbt(store.send.newTx.psbt, psbtBase64);
 }
 
 export async function validateSend() {
