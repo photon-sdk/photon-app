@@ -1,6 +1,12 @@
 import {DevSettings} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
-import {WalletStore, ElectrumClient} from '@photon-sdk/photon-lib';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
+import {
+  WalletStore,
+  ElectrumClient,
+  MultisigHDWallet,
+} from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as nav from './nav';
@@ -36,8 +42,17 @@ export async function loadFromDisk() {
 }
 
 export function getWallet() {
+  const multisig = getMultisigWallet();
+  if (multisig) {
+    return multisig;
+  }
   const [wallet] = walletStore.getWallets();
   return wallet;
+}
+
+export function getMultisigWallet() {
+  const wallets = walletStore.getWallets();
+  return wallets.length === 2 ? wallets[1] : null;
 }
 
 export async function checkPin() {
@@ -141,6 +156,61 @@ export async function fetchNextAddress() {
     await nap(100);
   }
   store.nextAddress = await getWallet().getAddressAsync();
+}
+
+//
+// Multisig
+//
+
+export async function importColdCardCosigner() {
+  try {
+    await _importColdCardFile();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _importColdCardFile() {
+  const res = await DocumentPicker.pick({
+    type: [DocumentPicker.types.allFiles],
+  });
+  const json = await RNFS.readFile(res.uri, 'utf8');
+  const config = JSON.parse(json);
+  if (!config.p2wsh || !config.xfp) {
+    throw new Error('Invalid ColdCard json format!');
+  }
+  store.cosigners.push({
+    xpub: config.p2wsh,
+    fingerprint: config.xfp,
+  });
+}
+
+export async function createMultiSig() {
+  try {
+    await _createMultiSig();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _createMultiSig() {
+  const multisig = getMultisigWallet();
+  if (multisig) {
+    throw new Error('Multisig wallet already exists!');
+  }
+  const mnemonic = await getWallet().getSecret();
+  const msWallet = new MultisigHDWallet();
+  msWallet.addCosigner(mnemonic);
+  if (!store.cosigners.length) {
+    throw new Error('Not enough cosigners!');
+  }
+  store.cosigners.forEach(cosigner => {
+    msWallet.addCosigner(cosigner.xpub, cosigner.fingerprint);
+  });
+  msWallet.setDerivationPath("m/48'/0'/0'/2'");
+  msWallet.setM(2);
+  walletStore.wallets.push(msWallet);
+  await walletStore.saveToDisk();
 }
 
 //
