@@ -31,6 +31,12 @@ const SettingsScreen = () => (
       <Button title="Change PIN" onPress={() => backup.initPinChange()} />
     </View>
     <View style={styles.btnWrapper}>
+      <Button title="Import ColdCard" onPress={() => wallet.createMultiSig()} />
+    </View>
+    <View style={styles.btnWrapper}>
+      <Button title="Export Multisig.txt" onPress={() => wallet.exportMultiSigTxt()} />
+    </View>
+    <View style={styles.btnWrapper}>
       <Button title="Logout" onPress={() => wallet.logout()} />
     </View>
   </View>

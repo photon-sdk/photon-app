@@ -1,6 +1,7 @@
 import {DevSettings} from 'react-native';
 import Clipboard from '@react-native-community/clipboard';
 import DocumentPicker from 'react-native-document-picker';
+import RNShare from 'react-native-share';
 import RNFS from 'react-native-fs';
 import {
   WalletStore,
@@ -162,9 +163,11 @@ export async function fetchNextAddress() {
 // Multisig
 //
 
-export async function importColdCardCosigner() {
+export async function createMultiSig() {
   try {
     await _importColdCardFile();
+    await _createMultiSig();
+    alert.info('Success', '2-of-2 MultiSig created!');
   } catch (err) {
     alert.error({err});
   }
@@ -185,14 +188,6 @@ async function _importColdCardFile() {
   });
 }
 
-export async function createMultiSig() {
-  try {
-    await _createMultiSig();
-  } catch (err) {
-    alert.error({err});
-  }
-}
-
 async function _createMultiSig() {
   const multisig = getMultisigWallet();
   if (multisig) {
@@ -211,6 +206,29 @@ async function _createMultiSig() {
   msWallet.setM(2);
   walletStore.wallets.push(msWallet);
   await walletStore.saveToDisk();
+}
+
+export async function exportMultiSigTxt() {
+  try {
+    await _exportMultiSigTxt();
+    alert.info('Success', 'Multisig.txt exported!');
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _exportMultiSigTxt() {
+  const multisig = getMultisigWallet();
+  if (!multisig) {
+    throw new Error('No multisig wallet to export!');
+  }
+  const filePath = RNFS.DocumentDirectoryPath + '/Multisig.txt';
+  await RNFS.writeFile(filePath, multisig.getXpub(), 'utf8');
+  await RNShare.open({
+    url: `file://${filePath}`,
+    type: 'text/plain',
+  });
+  await RNFS.unlink(filePath);
 }
 
 //
