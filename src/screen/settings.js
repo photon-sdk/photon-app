@@ -6,6 +6,7 @@ import store from '../store';
 import * as wallet from '../action/wallet';
 import * as backup from '../action/backup';
 import * as userId from '../action/user-id';
+import * as multisig from '../action/multisig';
 
 const styles = StyleSheet.create({
   wrapper: {
@@ -31,10 +32,16 @@ const SettingsScreen = () => (
       <Button title="Change PIN" onPress={() => backup.initPinChange()} />
     </View>
     <View style={styles.btnWrapper}>
-      <Button title="Import ColdCard" onPress={() => wallet.createMultiSig()} />
+      <Button
+        title="Import ColdCard"
+        onPress={() => multisig.importColdCard()}
+      />
     </View>
     <View style={styles.btnWrapper}>
-      <Button title="Export Multisig.txt" onPress={() => wallet.exportMultiSigTxt()} />
+      <Button
+        title="Export Multisig.txt"
+        onPress={() => multisig.exportTxtFile()}
+      />
     </View>
     <View style={styles.btnWrapper}>
       <Button title="Logout" onPress={() => wallet.logout()} />
