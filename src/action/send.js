@@ -74,7 +74,11 @@ export async function validateAmount() {
       message: 'Checking...',
     });
     await createTransaction();
-    nav.goTo('SendConfirm');
+    if (walletLib.getMultisigWallet()) {
+      nav.goTo('SendPsbt');
+    } else {
+      nav.goTo('SendConfirm');
+    }
   } catch (err) {
     nav.goTo('SendAmount');
     alert.error({err});
@@ -103,14 +107,20 @@ export async function exportPsbt() {
 
 async function _sharePsbtFile() {
   const psbtBase64 = store.send.newTx.psbt.toBase64();
+  const filePath = `${RNFS.DocumentDirectoryPath}/${Date.now()}.psbt`;
+  await RNFS.writeFile(filePath, psbtBase64, 'base64');
   await RNShare.open({
-    url: `data:application/octet-stream/psbt;base64,${psbtBase64}`,
+    url: `file://${filePath}`,
+    type: 'application/octet-stream',
+    saveToFiles: true,
   });
+  await RNFS.unlink(filePath);
 }
 
 export async function importSignedPbst() {
   try {
     await _importPbstFile();
+    nav.goTo('SendConfirm');
   } catch (err) {
     alert.error({err});
   }
@@ -122,7 +132,7 @@ async function _importPbstFile() {
   });
   const psbtBase64 = await RNFS.readFile(res.uri, 'base64');
   const wallet = walletLib.getWallet();
-  store.send.newTx = wallet.combinePsbt(store.send.newTx.psbt, psbtBase64);
+  store.send.newTx.tx = wallet.combinePsbt(store.send.newTx.psbt, psbtBase64);
 }
 
 export async function validateSend() {
