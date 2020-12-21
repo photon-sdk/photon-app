@@ -20,6 +20,7 @@ import WalletScreen from './screen/wallet';
 import ReceiveScreen from './screen/receive';
 import SendAddressScreen from './screen/send-address';
 import SendAmountScreen from './screen/send-amount';
+import SendPsbtScreen from './screen/send-psbt';
 import SendConfirmScreen from './screen/send-confirm';
 import SendSuccessScreen from './screen/send-success';
 import SettingsScreen from './screen/settings';
@@ -66,6 +67,16 @@ const SendStackScreen = () => (
         title: 'Amount',
         headerLeft: () => (
           <HeaderBackButton label="Address" onPress={() => nav.goBack()} />
+        ),
+      }}
+    />
+    <SendStack.Screen
+      name="SendPsbt"
+      component={SendPsbtScreen}
+      options={{
+        title: 'Sign PSBT',
+        headerLeft: () => (
+          <HeaderBackButton label="Amount" onPress={() => nav.goBack()} />
         ),
       }}
     />
