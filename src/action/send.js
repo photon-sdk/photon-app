@@ -1,4 +1,7 @@
 import Clipboard from '@react-native-community/clipboard';
+import RNShare from 'react-native-share';
+import DocumentPicker from 'react-native-document-picker';
+import RNFS from 'react-native-fs';
 import {ElectrumClient} from '@photon-sdk/photon-lib';
 import urlParse from 'url-parse';
 
@@ -71,7 +74,11 @@ export async function validateAmount() {
       message: 'Checking...',
     });
     await createTransaction();
-    nav.goTo('SendConfirm');
+    if (walletLib.getMultisigWallet()) {
+      nav.goTo('SendPsbt');
+    } else {
+      nav.goTo('SendConfirm');
+    }
   } catch (err) {
     nav.goTo('SendAmount');
     alert.error({err});
@@ -88,6 +95,44 @@ export async function createTransaction() {
   const target = [{value, address}];
   const changeTo = await wallet.getAddressAsync();
   store.send.newTx = wallet.createTransaction(utxo, target, feeRate, changeTo);
+}
+
+export async function exportPsbt() {
+  try {
+    await _sharePsbtFile();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _sharePsbtFile() {
+  const psbtBase64 = store.send.newTx.psbt.toBase64();
+  const filePath = `${RNFS.DocumentDirectoryPath}/${Date.now()}.psbt`;
+  await RNFS.writeFile(filePath, psbtBase64, 'base64');
+  await RNShare.open({
+    url: `file://${filePath}`,
+    type: 'application/octet-stream',
+    saveToFiles: true,
+  });
+  await RNFS.unlink(filePath);
+}
+
+export async function importSignedPbst() {
+  try {
+    await _importPbstFile();
+    nav.goTo('SendConfirm');
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _importPbstFile() {
+  const res = await DocumentPicker.pick({
+    type: [DocumentPicker.types.allFiles],
+  });
+  const psbtBase64 = await RNFS.readFile(res.uri, 'base64');
+  const wallet = walletLib.getWallet();
+  store.send.newTx.tx = wallet.combinePsbt(store.send.newTx.psbt, psbtBase64);
 }
 
 export async function validateSend() {

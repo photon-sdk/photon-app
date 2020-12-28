@@ -7,7 +7,7 @@ import * as nav from './nav';
 import * as alert from './alert';
 import {nap} from '../util';
 
-const walletStore = new WalletStore();
+export const walletStore = new WalletStore();
 const PIN_KEY = 'photon.pin';
 
 //
@@ -36,8 +36,17 @@ export async function loadFromDisk() {
 }
 
 export function getWallet() {
+  const multisig = getMultisigWallet();
+  if (multisig) {
+    return multisig;
+  }
   const [wallet] = walletStore.getWallets();
   return wallet;
+}
+
+export function getMultisigWallet() {
+  const wallets = walletStore.getWallets();
+  return wallets.length === 2 ? wallets[1] : null;
 }
 
 export async function checkPin() {
