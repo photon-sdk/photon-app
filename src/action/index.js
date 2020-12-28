@@ -5,6 +5,7 @@ import * as nav from './nav';
 import * as wallet from './wallet';
 import * as backup from './backup';
 import * as userId from './user-id';
+import {Platform} from 'react-native';
 
 when(
   () => store.navReady,
@@ -15,7 +16,9 @@ when(
       nav.reset('PinCheck');
       return;
     }
-    await backup.authenticate();
+    if (Platform.OS === 'android') {
+      await backup.authenticate();
+    }
     const hasBackup = await backup.checkBackup();
     if (!hasBackup) {
       backup.initBackup();
@@ -28,6 +31,9 @@ when(
 when(
   () => store.walletReady,
   async () => {
+    if (Platform.OS === 'android') {
+      await backup.authenticate();
+    }
     wallet.loadXpub();
     wallet.loadBalance();
     wallet.loadTransactions();

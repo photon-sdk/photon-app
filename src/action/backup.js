@@ -4,6 +4,9 @@ import store from '../store';
 import * as nav from './nav';
 import * as alert from './alert';
 import {saveToDisk, savePinToDisk} from './wallet';
+import {Platform} from 'react-native';
+
+const platform = Platform.OS === 'ios' ? 'iCloud' : 'Google Drive';
 
 //
 // Init
@@ -15,7 +18,10 @@ export function init() {
 
 export async function authenticate() {
   try {
-    await KeyBackup.authenticate();
+    await KeyBackup.authenticate({
+      clientId:
+        '535388410545-2qu0melfkv5n593i6nv4v9dhaa1u4vph.apps.googleusercontent.com',
+    });
   } catch (err) {
     alert.error({err});
   }
@@ -63,7 +69,7 @@ export async function validatePinVerify() {
   }
   try {
     nav.goTo('BackupWait', {
-      message: 'Creating encrypted\niCloud backup...',
+      message: `Creating encrypted\n${platform} backup...`,
     });
     await _generateWalletAndBackup(pin);
     nav.reset('Main');
@@ -150,7 +156,7 @@ export function initRestore() {
 export async function validatePin() {
   try {
     nav.goTo('RestoreWait', {
-      message: 'Restoring wallet\nfrom iCloud...',
+      message: `Restoring wallet\nfrom ${platform}...`,
     });
     await _verifyPinAndRestore();
     nav.reset('Main');
