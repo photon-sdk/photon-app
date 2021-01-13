@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Platform} from 'react-native';
 import {observer} from 'mobx-react';
 
 import {H1Text, Text} from '../component/text';
@@ -11,6 +11,8 @@ import {font} from '../component/style';
 
 import store from '../store';
 import * as userId from '../action/user-id';
+
+const platform = Platform.OS === 'ios' ? 'iCloud' : 'Google';
 
 const styles = StyleSheet.create({
   input: {
@@ -42,8 +44,7 @@ const EmailSetScreen = () => (
         onChangeText={email => userId.setEmail(email)}
       />
       <Text style={styles.hint}>
-        Your email is used in case you forget your PIN. Use a different one than
-        your iCloud account.
+        {`Your email is used in case you forget your PIN. Use a different one than your ${platform} account.`}
       </Text>
       <Spacer />
       <View style={styles.btnWrapper}>
