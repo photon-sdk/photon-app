@@ -28,7 +28,6 @@ when(
 when(
   () => store.walletReady,
   async () => {
-    await backup.authenticate();
     wallet.loadXpub();
     wallet.loadBalance();
     wallet.loadTransactions();
