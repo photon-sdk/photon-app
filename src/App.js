@@ -24,6 +24,7 @@ import SendPsbtScreen from './screen/send-psbt';
 import SendConfirmScreen from './screen/send-confirm';
 import SendSuccessScreen from './screen/send-success';
 import SettingsScreen from './screen/settings';
+import CosignerExportScreen from './screen/cosigner-export';
 import EmailSetScreen from './screen/email-set';
 import EmailPinScreen from './screen/email-pin';
 import EmailVerifyScreen from './screen/email-verify';
@@ -35,6 +36,7 @@ const PinChangeStack = createStackNavigator();
 const PinCheckStack = createStackNavigator();
 const RestoreStack = createStackNavigator();
 const EmailSetStack = createStackNavigator();
+const CosignerExportStack = createStackNavigator();
 const MainStack = createBottomTabNavigator();
 const RootStack = createStackNavigator();
 
@@ -137,6 +139,21 @@ const PinChangeStackScreen = () => (
       options={{headerShown: false}}
     />
   </PinChangeStack.Navigator>
+);
+
+const CosignerExportStackScreen = () => (
+  <CosignerExportStack.Navigator>
+    <CosignerExportStack.Screen
+      name="CosignerExport"
+      component={CosignerExportScreen}
+      options={{
+        title: 'Export Cosigner',
+        headerLeft: () => (
+          <HeaderBackButton label="Settings" onPress={() => nav.goBack()} />
+        ),
+      }}
+    />
+  </CosignerExportStack.Navigator>
 );
 
 const PinCheckStackScreen = () => (
@@ -282,6 +299,11 @@ const App = () => (
       <RootStack.Screen
         name="PinChange"
         component={PinChangeStackScreen}
+        options={{headerShown: false}}
+      />
+      <RootStack.Screen
+        name="CosignerExport"
+        component={CosignerExportStackScreen}
         options={{headerShown: false}}
       />
     </RootStack.Navigator>
