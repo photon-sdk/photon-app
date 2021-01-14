@@ -15,6 +15,7 @@ when(
       nav.reset('PinCheck');
       return;
     }
+    await backup.authenticate();
     const hasBackup = await backup.checkBackup();
     if (!hasBackup) {
       backup.initBackup();
