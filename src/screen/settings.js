@@ -14,7 +14,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   btnWrapper: {
-    marginTop: 50,
+    marginTop: 40,
     alignItems: 'center',
   },
 });
@@ -30,6 +30,12 @@ const SettingsScreen = () => (
     </View>
     <View style={styles.btnWrapper}>
       <Button title="Change PIN" onPress={() => backup.initPinChange()} />
+    </View>
+    <View style={styles.btnWrapper}>
+      <Button
+        title="Export Cosigner"
+        onPress={() => multisig.initCosignerExport()}
+      />
     </View>
     <View style={styles.btnWrapper}>
       <Button

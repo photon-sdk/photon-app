@@ -13,6 +13,7 @@ const store = observable({
   balanceRefreshing: false,
   transactions: [],
   nextAddress: null,
+  cosignerExport: null,
   cosigners: [],
 
   // screens

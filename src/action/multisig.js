@@ -4,8 +4,53 @@ import RNFS from 'react-native-fs';
 import {MultisigHDWallet} from '@photon-sdk/photon-lib';
 
 import store from '../store';
+import * as nav from './nav';
 import * as alert from './alert';
 import {getWallet, getMultisigWallet, walletStore} from './wallet';
+
+const PATH = "m/48'/0'/0'/2'";
+
+//
+// Export Cosigner
+//
+
+function _loadCosignerExport() {
+  const mnemonic = walletStore.wallets[0].getSecret();
+  const msWallet = new MultisigHDWallet();
+  msWallet.setDerivationPath(PATH);
+  const xpub = MultisigHDWallet.seedToXpub(mnemonic, PATH);
+  const Zpub = msWallet.convertXpubToMultisignatureXpub(xpub);
+  const xfp = MultisigHDWallet.seedToFingerprint(mnemonic);
+  store.cosignerExport = JSON.stringify({xfp, xpub: Zpub, path: PATH});
+}
+
+export function initCosignerExport() {
+  _loadCosignerExport();
+  nav.goTo('CosignerExport');
+}
+
+export async function shareCosigner() {
+  try {
+    await _shareCosigner();
+  } catch (err) {
+    alert.error({err});
+  }
+}
+
+async function _shareCosigner() {
+  const xfp = JSON.parse(store.cosignerExport).xfp;
+  const filePath = `${RNFS.DocumentDirectoryPath}/mmxp-${xfp}.json`;
+  await RNFS.writeFile(filePath, store.cosignerExport, 'utf8');
+  await RNShare.open({
+    url: `file://${filePath}`,
+    type: 'application/json',
+  });
+  await RNFS.unlink(filePath);
+}
+
+//
+// Import ColdCard
+//
 
 export async function importColdCard() {
   try {
@@ -37,7 +82,7 @@ async function _createMultiSig() {
   if (multisig) {
     throw new Error('Multisig wallet already exists!');
   }
-  const mnemonic = await getWallet().getSecret();
+  const mnemonic = getWallet().getSecret();
   const msWallet = new MultisigHDWallet();
   msWallet.addCosigner(mnemonic);
   if (!store.cosigners.length) {
@@ -46,11 +91,15 @@ async function _createMultiSig() {
   store.cosigners.forEach(cosigner => {
     msWallet.addCosigner(cosigner.xpub, cosigner.fingerprint);
   });
-  msWallet.setDerivationPath("m/48'/0'/0'/2'");
+  msWallet.setDerivationPath(PATH);
   msWallet.setM(2);
   walletStore.wallets.push(msWallet);
   await walletStore.saveToDisk();
 }
+
+//
+// Export Multisig.txt
+//
 
 export async function exportTxtFile() {
   try {
