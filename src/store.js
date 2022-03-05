@@ -1,4 +1,5 @@
 import {observable} from 'mobx';
+import {Platform} from 'react-native';
 import ComputedSend from './computed/send';
 import ComputedWallet from './computed/wallet';
 
@@ -44,7 +45,10 @@ const store = observable({
       tcp: '50001',
       ssl: null,
     },
-    keyServer: 'http://c74c-205-253-124-91.ngrok.io/prod',
+    keyServer:
+      Platform.OS === 'android'
+        ? 'http://6678-205-253-124-76.ngrok.io/prod'
+        : 'http://127.0.0.1:3000/prod',
   },
 });
 

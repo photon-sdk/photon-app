@@ -1,4 +1,4 @@
-import {KeyBackup} from '@photon-sdk/photon-lib';
+import { KeyBackup } from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as nav from './nav';
@@ -42,11 +42,11 @@ export function setPin(pin) {
 export async function validateEmailPin() {
   try {
     initEmailVerify();
-    const {email, pin} = store.userId;
-    await KeyBackup.registerEmail({userId: email, pin});
+    const { email, pin } = store.userId;
+    await KeyBackup.registerEmail({ userId: email, pin });
   } catch (err) {
     initPinSet();
-    alert.error({err});
+    alert.error({ err });
   }
 }
 
@@ -70,13 +70,13 @@ export async function validateEmailCode() {
     nav.goTo('EmailWait', {
       message: 'Verifying email...',
     });
-    const {email, code} = store.userId;
-    await KeyBackup.verifyEmail({userId: email, code});
+    const { email, code } = store.userId;
+    await KeyBackup.verifyEmail({ userId: email, code });
     await fetchUserIds();
     nav.goTo('Settings');
   } catch (err) {
     initEmailVerify();
-    alert.error({err});
+    alert.error({ err });
   }
 }
 
@@ -94,11 +94,11 @@ export async function initPinReset() {
       backup.initRestore();
       return alert.info('PIN Reset Failed', 'No recovery email address.');
     }
-    await KeyBackup.initPinReset({userId: store.userId.email});
+    await KeyBackup.initPinReset({ userId: store.userId.email });
     initPinResetCode();
   } catch (err) {
     backup.initRestore();
-    alert.error({err});
+    alert.error({ err });
   }
 }
 
@@ -121,9 +121,9 @@ export function initPinResetNewPin() {
 }
 
 export async function validatePinResetNewPin() {
-  const {newPin} = store.backup;
+  const { newPin } = store.backup;
   if (!newPin || newPin.length < 4) {
-    return alert.error({message: 'PIN must be at least 4 digits!'});
+    return alert.error({ message: 'PIN must be at least 4 digits!' });
   }
   initPinResetPinVerify();
 }
@@ -136,16 +136,16 @@ export function initPinResetPinVerify() {
 }
 
 export async function verifyPinReset() {
-  const {newPin, pinVerify} = store.backup;
-  const {email: userId, code} = store.userId;
+  const { newPin, pinVerify } = store.backup;
+  const { email: userId, code } = store.userId;
   if (newPin !== pinVerify) {
-    return alert.error({message: "PINs don't match!"});
+    return alert.error({ message: "PINs don't match!" });
   }
   try {
     nav.goTo('RestoreWait', {
       message: 'Verifying PIN reset...',
     });
-    const delay = await KeyBackup.verifyPinReset({userId, code, newPin});
+    const delay = await KeyBackup.verifyPinReset({ userId, code, newPin });
     backup.initRestore();
     if (delay) {
       alert.info(
@@ -160,6 +160,6 @@ export async function verifyPinReset() {
     }
   } catch (err) {
     backup.initRestore();
-    alert.error({err});
+    alert.error({ err });
   }
 }
