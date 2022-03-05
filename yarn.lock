@@ -6016,9 +6016,9 @@ performance-now@^2.1.0:
   resolved "https://registry.yarnpkg.com/performance-now/-/performance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
   integrity sha1-Ywn04OX6kT7BxpMHrjZLSzd8nns=
 
-"photon-lib@https://github.com/LtbLightning/photon-lib#upgrade-dependencies":
+"photon-lib@https://github.com/photon-sdk/photon-lib#master":
   version "0.10.0"
-  resolved "https://github.com/LtbLightning/photon-lib#6fa3985ed7aac5efdc516b17fa6d7538018a2717"
+  resolved "https://github.com/photon-sdk/photon-lib#ca1fd98066e1c632f3ce5e75231a74b303d7ec40"
   dependencies:
     "@photon-sdk/rn-electrum-client" "^4.0.0"
     base-x "^3.0.8"

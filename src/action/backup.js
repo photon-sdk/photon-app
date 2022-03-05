@@ -1,4 +1,4 @@
-import {HDSegwitBech32Wallet, KeyBackup} from '@photon-sdk/photon-lib';
+import {HDSegwitBech32Wallet, KeyBackup} from 'photon-lib';
 
 import store from '../store';
 import * as nav from './nav';
@@ -20,7 +20,7 @@ export async function authenticate() {
   try {
     await KeyBackup.authenticate({
       clientId:
-        '528769806899-3c685tr9qqahcjn5lnpu34beb6vrjjmh.apps.googleusercontent.com',
+        '528769806899-1ronv1lga0vvge6mjpfj5b4ar0d2a6ap.apps.googleusercontent.com',
     });
   } catch (err) {
     alert.error({err});

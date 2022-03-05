@@ -2,7 +2,7 @@ import Clipboard from '@react-native-community/clipboard';
 import RNShare from 'react-native-share';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';
-import {ElectrumClient} from '@photon-sdk/photon-lib';
+import {ElectrumClient} from 'photon-lib';
 import urlParse from 'url-parse';
 
 import store from '../store';
