@@ -41,6 +41,11 @@ buck-out/
 *.keystore
 !debug.keystore
 
+#Misc local files
+_DelSyncFiles
+.vscode/settings.json
+.com*
+
 # fastlane
 #
 # It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the

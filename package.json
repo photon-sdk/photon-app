@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios --simulator \"iPhone 8\"",
+    "ios": "react-native run-ios --simulator \"iPhone 13\"",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint ."
@@ -40,7 +40,7 @@
     "react-native-share": "^4.1.0",
     "react-native-svg": "^12.1.0",
     "react-native-vector-icons": "^6.6.0",
-    "url-parse": "^1.4.7"
+    "url-parse": "^1.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",

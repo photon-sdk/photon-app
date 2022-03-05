@@ -44,7 +44,7 @@ const store = observable({
       tcp: '50001',
       ssl: null,
     },
-    keyServer: 'https://keys.mymattress.io',
+    keyServer: 'http://c74c-205-253-124-91.ngrok.io/prod',
   },
 });
 
