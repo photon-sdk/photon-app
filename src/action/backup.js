@@ -20,7 +20,7 @@ export async function authenticate() {
   try {
     await KeyBackup.authenticate({
       clientId:
-        '535388410545-2qu0melfkv5n593i6nv4v9dhaa1u4vph.apps.googleusercontent.com',
+        '528769806899-1ronv1lga0vvge6mjpfj5b4ar0d2a6ap.apps.googleusercontent.com',
     });
   } catch (err) {
     alert.error({err});
