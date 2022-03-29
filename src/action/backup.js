@@ -1,4 +1,4 @@
-import {HDSegwitBech32Wallet, KeyBackup} from 'photon-lib';
+import {HDSegwitBech32Wallet, KeyBackup} from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as nav from './nav';

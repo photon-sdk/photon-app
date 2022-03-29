@@ -1,4 +1,4 @@
-import {KeyBackup} from 'photon-lib';
+import {KeyBackup} from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as nav from './nav';

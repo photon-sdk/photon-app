@@ -1,7 +1,7 @@
 import DocumentPicker from 'react-native-document-picker';
 import RNShare from 'react-native-share';
 import RNFS from 'react-native-fs';
-import {MultisigHDWallet} from 'photon-lib';
+import {MultisigHDWallet} from '@photon-sdk/photon-lib';
 
 import store from '../store';
 import * as alert from './alert';
