@@ -21,6 +21,8 @@
     "@react-navigation/stack": "^5.3.3",
     "@robinbobin/react-native-google-drive-api-wrapper": "^1.2.3",
     "intl": "^1.2.5",
+    "mobx": "^6.6.1",
+    "mobx-react": "^7.5.2",
     "node-libs-react-native": "^1.2.1",
     "react": "18.0.0",
     "react-native": "0.69.5",
