@@ -17,11 +17,16 @@
     "@react-native-community/clipboard": "^1.5.1",
     "@react-native-google-signin/google-signin": "^7.2.2",
     "@robinbobin/react-native-google-drive-api-wrapper": "^1.2.3",
+    "@react-navigation/bottom-tabs": "^5.5.0",
+    "@react-navigation/native": "^5.3.0",
+    "@react-navigation/stack": "^5.3.3",
     "node-libs-react-native": "^1.2.1",
     "react": "18.0.0",
     "react-native": "0.69.5",
     "react-native-keychain": "^6.2.0",
     "react-native-randombytes": "^3.6.1",
+    "react-native-safe-area-context": "^1.0.0",
+    "react-native-screens": "^2.7.0",
     "rn-ldk": "github:BlueWallet/rn-ldk"
   },
   "devDependencies": {

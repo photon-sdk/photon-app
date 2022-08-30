@@ -300,6 +300,8 @@ PODS:
     - glog
   - react-native-randombytes (3.6.1):
     - React-Core
+  - react-native-safe-area-context (1.0.2):
+    - React
   - react-native-tcp (6.3.0):
     - React
   - React-perflogger (0.69.5)
@@ -381,6 +383,8 @@ PODS:
     - React
   - RNKeychain (6.2.0):
     - React
+  - RNScreens (2.18.1):
+    - React-Core
   - SocketRocket (0.6.0)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
@@ -431,6 +435,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - React-logger (from `../node_modules/react-native/ReactCommon/logger`)
   - react-native-randombytes (from `../node_modules/react-native-randombytes`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - "react-native-tcp (from `../node_modules/@photon-sdk/react-native-tcp`)"
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
@@ -450,6 +455,7 @@ DEPENDENCIES:
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - "RNICloudStore (from `../node_modules/@photon-sdk/react-native-icloudstore`)"
   - RNKeychain (from `../node_modules/react-native-keychain`)
+  - RNScreens (from `../node_modules/react-native-screens`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
@@ -515,6 +521,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/logger"
   react-native-randombytes:
     :path: "../node_modules/react-native-randombytes"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   react-native-tcp:
     :path: "../node_modules/@photon-sdk/react-native-tcp"
   React-perflogger:
@@ -553,6 +561,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@photon-sdk/react-native-icloudstore"
   RNKeychain:
     :path: "../node_modules/react-native-keychain"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
@@ -594,6 +604,7 @@ SPEC CHECKSUMS:
   React-jsinspector: e385fb7a1440ae3f3b2cd1a139ca5aadaab43c10
   React-logger: 15c734997c06fe9c9b88e528fb7757601e7a56df
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
+  react-native-safe-area-context: 9d9640a9085014864052e38496fc1dfde0b93974
   react-native-tcp: 5e814866a2904c3cffb704d70f8e6b1fe55ffe38
   React-perflogger: 367418425c5e4a9f0f80385ee1eaacd2a7348f8e
   React-RCTActionSheet: e4885e7136f98ded1137cd3daccc05eaed97d5a6
@@ -613,6 +624,7 @@ SPEC CHECKSUMS:
   RNGoogleSignin: d7f8368b82d94f1dec964785d496387ca7f19092
   RNICloudStore: 39b85428b446131675e96e807b6641052c5a9a27
   RNKeychain: b8e0711b959a19c5b057d1e970d3c83d159b6da5
+  RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   SocketRocket: fccef3f9c5cedea1353a9ef6ada904fde10d6608
   Yoga: c2b1f2494060865ac1f27e49639e72371b1205fa
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
