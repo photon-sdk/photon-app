@@ -44,7 +44,7 @@ const store = observable({
       tcp: '50001',
       ssl: null,
     },
-    keyServer: 'https://keys.mymattress.io',
+    keyServer: 'https://keys-dev.photonsdk.com',
   },
 });
 
