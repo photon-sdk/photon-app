@@ -298,13 +298,13 @@ PODS:
   - React-jsinspector (0.69.5)
   - React-logger (0.69.5):
     - glog
-  - react-native-camera (3.44.3):
+  - react-native-camera (4.3.0):
     - React-Core
-    - react-native-camera/RCT (= 3.44.3)
-    - react-native-camera/RN (= 3.44.3)
-  - react-native-camera/RCT (3.44.3):
+    - react-native-camera/RCT (= 4.3.0)
+    - react-native-camera/RN (= 4.3.0)
+  - react-native-camera/RCT (4.3.0):
     - React-Core
-  - react-native-camera/RN (3.44.3):
+  - react-native-camera/RN (4.3.0):
     - React-Core
   - react-native-document-picker (8.1.1):
     - React-Core
@@ -649,7 +649,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: e42f0b46de293a026c2fb20e524d4fe09f81f575
   React-jsinspector: e385fb7a1440ae3f3b2cd1a139ca5aadaab43c10
   React-logger: 15c734997c06fe9c9b88e528fb7757601e7a56df
-  react-native-camera: b8cc03e2feec0c04403d0998e37cf519d8fd4c6f
+  react-native-camera: 5cc7f1282ca76ffa0331bb89ac45580c79f39960
   react-native-document-picker: f68191637788994baed5f57d12994aa32cf8bf88
   react-native-randombytes: 421f1c7d48c0af8dbcd471b0324393ebf8fe7846
   react-native-safe-area-context: 9d9640a9085014864052e38496fc1dfde0b93974
