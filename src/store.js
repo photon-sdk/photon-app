@@ -41,10 +41,10 @@ const store = observable({
   config: {
     electrum: {
       host: 'electrum1.bluewallet.io',
-      tcp: '50001',
-      ssl: null,
+      tcp: null,
+      ssl: '443',
     },
-    keyServer: 'https://keys.mymattress.io',
+    keyServer: 'https://keys-dev.photonsdk.com',
   },
 });
 

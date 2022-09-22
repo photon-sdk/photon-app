@@ -1,10 +1,12 @@
-import {when} from 'mobx';
+import {when, configure} from 'mobx';
 
 import store from '../store';
 import * as nav from './nav';
 import * as wallet from './wallet';
 import * as backup from './backup';
 import * as userId from './user-id';
+
+configure({enforceActions: 'never'}); // disable strict mode
 
 when(
   () => store.navReady,

@@ -1,4 +1,4 @@
-import Clipboard from '@react-native-community/clipboard';
+import Clipboard from '@react-native-clipboard/clipboard';
 import RNShare from 'react-native-share';
 import DocumentPicker from 'react-native-document-picker';
 import RNFS from 'react-native-fs';

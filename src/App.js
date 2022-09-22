@@ -267,7 +267,7 @@ const App = () => (
       <RootStack.Screen
         name="Main"
         component={MainStackScreen}
-        options={{title: 'MyMattress'}}
+        options={{title: 'Photon'}}
       />
       <RootStack.Screen
         name="SendAmount"
